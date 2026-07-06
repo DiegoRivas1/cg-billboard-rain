@@ -20,6 +20,19 @@ add_executable(${PROJECT_NAME}
         graphics/Camera.cpp
         graphics/Shader.h
         graphics/Shader.cpp
+        graphics/Vertex.h
+        graphics/Mesh.h
+        graphics/Mesh.cpp
+        graphics/QuadMesh.h
+        graphics/QuadMesh.cpp
+        scene/Transform.h
+        scene/Transform.cpp
+        scene/SceneObject.h
+        scene/SceneObject.cpp
+        graphics/Material.h
+        graphics/Material.cpp
+        scene/Scene.h
+        scene/Scene.cpp
 )
 
 add_subdirectory(core)

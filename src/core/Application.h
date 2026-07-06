@@ -12,6 +12,8 @@
 #include "gui/GuiManager.h"
 #include "core/Timer.h"
 #include "graphics/Camera.h"
+#include "scene/Scene.h"
+#include "graphics/QuadMesh.h"
 
 class Application
 {
@@ -32,6 +34,8 @@ private:
 
     bool initialize();
 
+    void initializeScene();
+
     void processInput();
 
     void update();
@@ -51,6 +55,8 @@ private:
     Timer m_timer;
 
     Camera m_camera;
+
+    Scene m_scene;
 };
 
 #endif //CG_BILLBOARD_RAIN_APPLICATION_H

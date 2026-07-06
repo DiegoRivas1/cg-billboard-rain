@@ -30,7 +30,32 @@ bool Application::initialize()
         return false;
     }
 
+    //
+    initializeScene();
+    //
+
     return true;
+}
+
+void Application::initializeScene()
+{
+    auto quad = std::make_shared<QuadMesh>();
+
+    auto shader = std::make_shared<Shader>();
+
+    shader->load(
+        "assets/shaders/vertex.glsl",
+        "assets/shaders/fragment.glsl"
+    );
+
+    auto material = std::make_shared<Material>(shader);
+
+    auto object = std::make_shared<SceneObject>();
+
+    object->mesh = quad;
+    object->material = material;
+
+    m_scene.add(object);
 }
 
 int Application::run()
