@@ -1,5 +1,5 @@
 #include "graphics/Mesh.h"
-
+#include <cstddef>
 Mesh::Mesh()
     : m_vao(0),
       m_vbo(0),
@@ -28,6 +28,7 @@ bool Mesh::create(
     glBindVertexArray(m_vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+
     glBufferData(
         GL_ARRAY_BUFFER,
         vertices.size() * sizeof(Vertex),
@@ -36,6 +37,7 @@ bool Mesh::create(
     );
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+
     glBufferData(
         GL_ELEMENT_ARRAY_BUFFER,
         indices.size() * sizeof(unsigned int),
@@ -43,6 +45,7 @@ bool Mesh::create(
         GL_STATIC_DRAW
     );
 
+    // Posición
     glEnableVertexAttribArray(0);
 
     glVertexAttribPointer(
@@ -52,6 +55,18 @@ bool Mesh::create(
         GL_FALSE,
         sizeof(Vertex),
         reinterpret_cast<void*>(offsetof(Vertex, position))
+    );
+
+    // Coordenadas UV
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(
+        1,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Vertex),
+        reinterpret_cast<void*>(offsetof(Vertex, texCoord))
     );
 
     glBindVertexArray(0);

@@ -11,5 +11,6 @@
 struct Vertex
 {
     glm::vec3 position;
+    glm::vec2 texCoord;
 };
 #endif //CG_BILLBOARD_RAIN_VERTEX_H
