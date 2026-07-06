@@ -1,16 +1,47 @@
-# This file handles building each task as sub-project.
-#
-# Each task becomes an independent project in which you can experiment.
-#
-# Tasks are added as separate sub-projects so as compilation errors in
-# one task don't affect another task.
+add_executable(${PROJECT_NAME}
 
+        main.cpp
 
-project(cg-billboard-rain)
+        ${EXTERNAL_DIR}/glad/src/glad.c
 
-set(CMAKE_CXX_STANDARD)
+        #imGUI
+        ${IMGUI_DIR}/imgui.cpp
+        ${IMGUI_DIR}/imgui_demo.cpp
+        ${IMGUI_DIR}/imgui_draw.cpp
+        ${IMGUI_DIR}/imgui_tables.cpp
+        ${IMGUI_DIR}/imgui_widgets.cpp
 
+        #backends
+        ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_DIR}/backends/imgui_impl_opengl2.cpp
+)
 
-# Add tasks subprojects
-include(cmake/utils.cmake)
-add_subprojects(${CMAKE_SOURCE_DIR})
+add_subdirectory(core)
+add_subdirectory(gui)
+add_subdirectory(graphics)
+add_subdirectory(math)
+add_subdirectory(scene)
+add_subdirectory(particles)
+add_subdirectory(utils)
+
+target_include_directories(${PROJECT_NAME}
+        PRIVATE
+
+        ${CMAKE_CURRENT_SOURCE_DIR}
+
+        ${EXTERNAL_DIR}/glad/include
+        ${EXTERNAL_DIR}/stb
+
+        ${IMGUI_DIR}
+        ${IMGUI_DIR}/backends
+)
+
+target_link_libraries(${PROJECT_NAME}
+
+        PRIVATE
+
+        glfw3
+        opengl32
+        glu32
+        gdi32
+)

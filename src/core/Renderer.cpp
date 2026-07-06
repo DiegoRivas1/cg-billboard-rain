@@ -1,3 +1,36 @@
-//
-// Created by DIEGO on 06/07/2026.
-//
+#include "core/Renderer.h"
+
+#include <glad/glad.h>
+
+bool Renderer::initialize()
+{
+    glViewport(0, 0, 1280, 720);
+
+    glClearColor(
+        0.10f,
+        0.12f,
+        0.18f,
+        1.0f
+    );
+
+    glEnable(GL_DEPTH_TEST);
+
+    glDepthFunc(GL_LESS);
+
+    return true;
+}
+
+void Renderer::beginFrame()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::endFrame()
+{
+    // Por ahora no hace nada.
+}
+
+void Renderer::shutdown()
+{
+
+}

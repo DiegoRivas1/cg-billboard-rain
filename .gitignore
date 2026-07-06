@@ -1,0 +1,17 @@
+build/
+
+cmake-build-debug/
+
+cmake-build-release/
+
+.idea/workspace.xml
+
+.idea/caches/
+
+.idea/inspectionProfiles/
+
+*.obj
+
+*.exe
+
+*.pdb

@@ -1,3 +1,8 @@
-//
-// Created by DIEGO on 06/07/2026.
-//
+#include "core/Application.h"
+
+int main()
+{
+    Application app;
+
+    return app.run();
+}
