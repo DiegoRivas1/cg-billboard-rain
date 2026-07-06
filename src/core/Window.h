@@ -1,0 +1,8 @@
+//
+// Created by DIEGO on 06/07/2026.
+//
+
+#ifndef CG_BILLBOARD_RAIN_WINDOW_H
+#define CG_BILLBOARD_RAIN_WINDOW_H
+
+#endif //CG_BILLBOARD_RAIN_WINDOW_H
