@@ -10,6 +10,7 @@
 #include "core/Renderer.h"
 #include "core/Window.h"
 #include "gui/GuiManager.h"
+#include "core/Timer.h"
 
 class Application
 {
@@ -45,6 +46,8 @@ private:
     Renderer m_renderer;
 
     GuiManager m_gui;
+
+    Timer m_timer;
 };
 
 #endif //CG_BILLBOARD_RAIN_APPLICATION_H

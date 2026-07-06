@@ -14,6 +14,8 @@ add_executable(${PROJECT_NAME}
         #backends
         ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
         ${IMGUI_DIR}/backends/imgui_impl_opengl2.cpp
+        core/Timer.h
+        core/Timer.cpp
 )
 
 add_subdirectory(core)

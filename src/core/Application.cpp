@@ -41,10 +41,10 @@ int Application::run()
 
     while (!m_window.shouldClose())
     {
+        m_timer.update();
+
         processInput();
-
         update();
-
         render();
     }
 

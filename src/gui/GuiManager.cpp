@@ -1,4 +1,5 @@
 #include "gui/GuiManager.h"
+#include "core/Timer.h"
 
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
@@ -68,7 +69,8 @@ void GuiManager::drawStatisticsWindow()
 {
     ImGui::Begin("Statistics");
 
-    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+    ImGui::Text("FPS: (connect later)");
+    ImGui::Text("Frame system active");
 
     ImGui::End();
 }
