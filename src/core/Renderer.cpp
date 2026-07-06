@@ -34,3 +34,9 @@ void Renderer::shutdown()
 {
 
 }
+
+void Renderer::setViewProjection(const glm::mat4& view, const glm::mat4& projection)
+{
+    m_view = view;
+    m_projection = projection;
+}

@@ -5,6 +5,7 @@
 #ifndef CG_BILLBOARD_RAIN_RENDERER_H
 #define CG_BILLBOARD_RAIN_RENDERER_H
 
+#include <glm/glm.hpp>
 //#pragma once
 
 class Renderer
@@ -26,6 +27,12 @@ public:
     void endFrame();
 
     void shutdown();
+
+    void setViewProjection(const glm::mat4& view, const glm::mat4& projection);
+
+private:
+    glm::mat4 m_view = glm::mat4(1.0f);
+    glm::mat4 m_projection = glm::mat4(1.0f);
 };
 
 #endif //CG_BILLBOARD_RAIN_RENDERER_H

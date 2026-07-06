@@ -8,6 +8,7 @@ Application::~Application()
 #include "core/Application.h"
 
 #include <cstdlib>
+#include <GLFW/glfw3.h>
 
 Application::Application() = default;
 Application::~Application() = default;
@@ -56,20 +57,40 @@ int Application::run()
 void Application::processInput()
 {
     m_window.pollEvents();
+
+    glm::vec3 dir(0.0f);
+
+    if (glfwGetKey(m_window.getNativeWindow(), GLFW_KEY_W) == GLFW_PRESS)
+        dir.z = 1.0f;
+
+    if (glfwGetKey(m_window.getNativeWindow(), GLFW_KEY_S) == GLFW_PRESS)
+        dir.z = -1.0f;
+
+    if (glfwGetKey(m_window.getNativeWindow(), GLFW_KEY_A) == GLFW_PRESS)
+        dir.x = -1.0f;
+
+    if (glfwGetKey(m_window.getNativeWindow(), GLFW_KEY_D) == GLFW_PRESS)
+        dir.x = 1.0f;
+
+    m_camera.processKeyboard(dir, m_timer.getDeltaTime());
 }
 
 void Application::update()
 {
+    m_camera.update(m_timer.getDeltaTime());
 }
 
 void Application::render()
 {
+    m_renderer.setViewProjection(
+        m_camera.getViewMatrix(),
+        m_camera.getProjectionMatrix()
+    );
+
     m_renderer.beginFrame();
 
     m_gui.beginFrame();
-
     m_gui.draw();
-
     m_gui.endFrame();
 
     m_renderer.endFrame();

@@ -11,6 +11,7 @@
 #include "core/Window.h"
 #include "gui/GuiManager.h"
 #include "core/Timer.h"
+#include "graphics/Camera.h"
 
 class Application
 {
@@ -48,6 +49,8 @@ private:
     GuiManager m_gui;
 
     Timer m_timer;
+
+    Camera m_camera;
 };
 
 #endif //CG_BILLBOARD_RAIN_APPLICATION_H
