@@ -33,6 +33,9 @@ add_executable(${PROJECT_NAME}
         graphics/Material.cpp
         scene/Scene.h
         scene/Scene.cpp
+        graphics/Texture.h
+        graphics/Texture.cpp
+        graphics/stb_image.cpp
 )
 
 add_subdirectory(core)
