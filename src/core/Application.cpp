@@ -89,6 +89,10 @@ void Application::render()
 
     m_renderer.beginFrame();
 
+    m_renderer.getShader().use();
+    m_renderer.getShader().setMat4("uView", m_camera.getViewMatrix());
+    m_renderer.getShader().setMat4("uProjection", m_camera.getProjectionMatrix());
+
     m_gui.beginFrame();
     m_gui.draw();
     m_gui.endFrame();

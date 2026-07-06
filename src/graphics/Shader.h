@@ -1,0 +1,30 @@
+//
+// Created by DIEGO on 06/07/2026.
+//
+
+#ifndef CG_BILLBOARD_RAIN_SHADER_H
+#define CG_BILLBOARD_RAIN_SHADER_H
+//#pragma once
+
+#include <string>
+#include <glm/glm.hpp>
+
+class Shader
+{
+public:
+    Shader();
+    ~Shader();
+
+    bool load(const std::string& vertexPath, const std::string& fragmentPath);
+
+    void use() const;
+
+    void setMat4(const std::string& name, const glm::mat4& mat) const;
+
+private:
+    unsigned int m_id;
+
+    std::string loadFile(const std::string& path);
+    unsigned int compile(unsigned int type, const std::string& source);
+};
+#endif //CG_BILLBOARD_RAIN_SHADER_H

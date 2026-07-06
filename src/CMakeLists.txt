@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME}
         core/Timer.cpp
         graphics/Camera.h
         graphics/Camera.cpp
+        graphics/Shader.h
+        graphics/Shader.cpp
 )
 
 add_subdirectory(core)

@@ -17,6 +17,8 @@ bool Renderer::initialize()
 
     glDepthFunc(GL_LESS);
 
+    m_shader.load("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+
     return true;
 }
 
@@ -39,4 +41,9 @@ void Renderer::setViewProjection(const glm::mat4& view, const glm::mat4& project
 {
     m_view = view;
     m_projection = projection;
+}
+
+Shader& Renderer::getShader()
+{
+    return m_shader;
 }
