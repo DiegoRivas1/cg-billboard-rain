@@ -17,7 +17,7 @@ public:
 
     void add(std::shared_ptr<SceneObject> object);
 
-    void render();
+    void render(const Renderer& renderer);
 
 private:
 

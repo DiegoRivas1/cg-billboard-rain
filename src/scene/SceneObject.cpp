@@ -3,14 +3,12 @@
 #include "graphics/Material.h"
 #include "graphics/Shader.h"
 
-void SceneObject::render()
+void SceneObject::render(const Renderer& renderer)
 {
     if (!mesh || !material)
-    {
         return;
-    }
 
-    material->bind();
+    material->bind(renderer);
 
     if (auto shader = material->getShader())
     {

@@ -5,12 +5,22 @@ Material::Material(std::shared_ptr<Shader> shader)
 {
 }
 
-void Material::bind() const
+void Material::bind(const Renderer& renderer) const
 {
-    if (m_shader)
-    {
-        m_shader->use();
-    }
+    if (!m_shader)
+        return;
+
+    m_shader->use();
+
+    m_shader->setMat4(
+        "uView",
+        renderer.getViewMatrix()
+    );
+
+    m_shader->setMat4(
+        "uProjection",
+        renderer.getProjectionMatrix()
+    );
 }
 
 std::shared_ptr<Shader> Material::getShader() const

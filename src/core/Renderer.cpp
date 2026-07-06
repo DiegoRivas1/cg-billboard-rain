@@ -42,6 +42,15 @@ void Renderer::setViewProjection(const glm::mat4& view, const glm::mat4& project
     m_view = view;
     m_projection = projection;
 }
+const glm::mat4& Renderer::getViewMatrix() const
+{
+    return m_view;
+}
+
+const glm::mat4& Renderer::getProjectionMatrix() const
+{
+    return m_projection;
+}
 
 Shader& Renderer::getShader()
 {

@@ -5,10 +5,10 @@ void Scene::add(std::shared_ptr<SceneObject> object)
     m_objects.push_back(std::move(object));
 }
 
-void Scene::render()
+void Scene::render(const Renderer& renderer)
 {
     for (const auto& object : m_objects)
     {
-        object->render();
+        object->render(renderer);
     }
 }

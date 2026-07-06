@@ -21,6 +21,6 @@ public:
 
     std::shared_ptr<Material> material;
 
-    void render();
+    void render(const Renderer& renderer);
 };
 #endif //CG_BILLBOARD_RAIN_SCENEOBJECT_H

@@ -10,7 +10,7 @@
 #include <memory>
 
 #include "graphics/Shader.h"
-
+#include "core/Renderer.h"
 class Material
 {
 public:
@@ -19,7 +19,7 @@ public:
 
     explicit Material(std::shared_ptr<Shader> shader);
 
-    void bind() const;
+    void bind(const Renderer& renderer) const;
 
     std::shared_ptr<Shader> getShader() const;
 
