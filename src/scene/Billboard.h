@@ -17,12 +17,8 @@ public:
 
     ~Billboard() override = default;
 
-    void render(const Renderer& renderer) override;
+    //void render(const Renderer& renderer) override;
 
-protected:
-
-    float m_width = 1.0f;
-    float m_height = 1.0f;
 };
 
 #endif //CG_BILLBOARD_RAIN_BILLBOARD_H

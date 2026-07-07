@@ -87,6 +87,8 @@ bool Texture::load(const std::string& filename)
         GL_LINEAR
     );
 
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     stbi_image_free(data);
 
     return true;
@@ -113,4 +115,8 @@ void Texture::destroy()
 
         m_textureID = 0;
     }
+
+    m_width = 0;
+    m_height = 0;
+    m_channels = 0;
 }

@@ -6,6 +6,7 @@ Application::~Application()
 */
 
 #include "core/Application.h"
+#include "scene/Billboard.h"
 
 #include <cstdlib>
 #include <GLFW/glfw3.h>
@@ -44,14 +45,13 @@ void Application::initializeScene()
     auto shader = std::make_shared<Shader>();
 
     shader->load(
-        "assets/shaders/vertex.glsl",
-        "assets/shaders/fragment.glsl"
-    );
+        "assets/shaders/billboard/vertex.glsl",
+        "assets/shaders/billboard/fragment.glsl");
 
     auto material = std::make_shared<Material>(shader);
 
-    auto object = std::make_shared<SceneObject>();
-
+    //auto object = std::make_shared<SceneObject>();
+    auto object = std::make_shared<Billboard>();
     object->mesh = quad;
     object->material = material;
 
