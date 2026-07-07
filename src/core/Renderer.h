@@ -38,7 +38,6 @@ public:
     const glm::vec3& getCameraUp() const;
     const glm::vec3& getCameraForward() const;
 
-    Shader& getShader();
 
 
 
@@ -50,7 +49,6 @@ private:
     glm::vec3 m_cameraUp;
     glm::vec3 m_cameraForward;
 
-    Shader m_shader;
 };
 
 #endif //CG_BILLBOARD_RAIN_RENDERER_H

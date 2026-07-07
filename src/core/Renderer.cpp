@@ -17,7 +17,7 @@ bool Renderer::initialize()
 
     glDepthFunc(GL_LESS);
 
-    m_shader.load("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+    //m_shader.load("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
 
     return true;
 }
@@ -52,10 +52,6 @@ const glm::mat4& Renderer::getProjectionMatrix() const
     return m_projection;
 }
 
-Shader& Renderer::getShader()
-{
-    return m_shader;
-}
 
 void Renderer::setCameraVectors(const glm::vec3& right, const glm::vec3& up, const glm::vec3& forward)
 {

@@ -15,12 +15,19 @@ class SceneObject
 {
 public:
 
+    SceneObject() = default;
+
+    virtual ~SceneObject() = default;
+
+    virtual void update(float deltaTime) {}
+
+    virtual void render(const Renderer& renderer);
+
     Transform transform;
 
     std::shared_ptr<Mesh> mesh;
 
     std::shared_ptr<Material> material;
 
-    void render(const Renderer& renderer);
 };
 #endif //CG_BILLBOARD_RAIN_SCENEOBJECT_H
