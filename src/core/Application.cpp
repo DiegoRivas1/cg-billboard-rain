@@ -112,6 +112,12 @@ void Application::render()
         m_camera.getProjectionMatrix()
     );
 
+    m_renderer.setCameraVectors(
+        m_camera.getRight(),
+        m_camera.getUp(),
+        m_camera.getForward()
+    );
+
     m_renderer.beginFrame();
 
     m_scene.render(m_renderer);

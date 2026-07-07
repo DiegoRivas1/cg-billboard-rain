@@ -56,3 +56,24 @@ Shader& Renderer::getShader()
 {
     return m_shader;
 }
+
+void Renderer::setCameraVectors(const glm::vec3& right, const glm::vec3& up, const glm::vec3& forward)
+{
+    m_cameraRight = right;
+    m_cameraUp = up;
+    m_cameraForward = forward;
+}
+
+const glm::vec3& Renderer::getCameraRight() const
+{
+    return m_cameraRight;
+}
+
+const glm::vec3& Renderer::getCameraUp() const
+{
+    return m_cameraUp;
+}
+const glm::vec3& Renderer::getCameraForward() const
+{
+    return m_cameraForward;
+}

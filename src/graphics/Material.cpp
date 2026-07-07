@@ -21,6 +21,22 @@ void Material::bind(const Renderer& renderer) const
         "uProjection",
         renderer.getProjectionMatrix()
     );
+
+    m_shader->setVec3(
+        "uCameraRight",
+        renderer.getCameraRight()
+    );
+
+    m_shader->setVec3(
+        "uCameraUp",
+        renderer.getCameraUp()
+    );
+
+    if (m_texture)
+    {
+        m_texture->bind(0);
+        m_shader->setInt("uTexture", 0);
+    }
 }
 
 std::shared_ptr<Shader> Material::getShader() const
@@ -31,4 +47,8 @@ std::shared_ptr<Shader> Material::getShader() const
 void Material::setShader(std::shared_ptr<Shader> shader)
 {
     m_shader = std::move(shader);
+}
+void Material::setTexture(std::shared_ptr<Texture> texture)
+{
+
 }

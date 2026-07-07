@@ -11,6 +11,7 @@
 
 #include "graphics/Shader.h"
 #include "core/Renderer.h"
+#include "graphics/Texture.h"
 class Material
 {
 public:
@@ -25,8 +26,13 @@ public:
 
     void setShader(std::shared_ptr<Shader> shader);
 
+    void setTexture(std::shared_ptr<Texture> texture);
+    std::shared_ptr<Texture> getTexture() const;
+
 private:
 
     std::shared_ptr<Shader> m_shader;
+
+    std::shared_ptr<Texture> m_texture;
 };
 #endif //CG_BILLBOARD_RAIN_MATERIAL_H

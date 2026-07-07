@@ -55,6 +55,21 @@ const glm::mat4& Camera::getProjectionMatrix() const
     return m_projection;
 }
 
+glm::vec3 Camera::getForward() const
+{
+    return m_front;
+}
+
+glm::vec3 Camera::getRight() const
+{
+    return m_right;
+}
+
+glm::vec3 Camera::getUp() const
+{
+    return m_up;
+}
+
 void Camera::processMouse(float xoffset, float yoffset)
 {
     xoffset *= m_sensitivity;

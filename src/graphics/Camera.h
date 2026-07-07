@@ -18,8 +18,11 @@ public:
 
     void setAspectRatio(float aspect);
 
-    const glm::mat4& getViewMatrix() const;
-    const glm::mat4& getProjectionMatrix() const;
+    [[nodiscard]] const glm::mat4& getViewMatrix() const;
+    [[nodiscard]] const glm::mat4& getProjectionMatrix() const;
+    [[nodiscard]] glm::vec3 getForward() const;
+    [[nodiscard]] glm::vec3 getRight() const;
+    [[nodiscard]] glm::vec3 getUp() const;
 
     void processMouse(float xoffset, float yoffset);
     void processKeyboard(const glm::vec3& direction, float dt);

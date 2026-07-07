@@ -25,7 +25,7 @@ public:
 
 private:
 
-    GLuint m_id = 0;
+    GLuint m_textureID = 0;
 
     int m_width = 0;
     int m_height = 0;
