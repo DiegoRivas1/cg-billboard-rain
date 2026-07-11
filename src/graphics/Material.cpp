@@ -50,5 +50,5 @@ void Material::setShader(std::shared_ptr<Shader> shader)
 }
 void Material::setTexture(std::shared_ptr<Texture> texture)
 {
-
+    m_texture = std::move(texture);
 }

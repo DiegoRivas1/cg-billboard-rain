@@ -10,7 +10,11 @@ RainParticle::RainParticle()
     mesh = RainResources::getMesh();
     material = RainResources::getMaterial();
 
-    transform.scale = glm::vec3(0.08f, 0.12f, 1.0f);
+    transform.scale = glm::vec3(
+        0.03f,
+        0.18f,
+        1.0f
+    );
 }
 
 
