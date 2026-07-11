@@ -7,6 +7,7 @@ Application::~Application()
 
 #include "core/Application.h"
 #include "scene/Billboard.h"
+#include "particles/RainParticle.h"
 
 #include <cstdlib>
 #include <GLFW/glfw3.h>
@@ -51,7 +52,14 @@ void Application::initializeScene()
     auto material = std::make_shared<Material>(shader);
 
     //auto object = std::make_shared<SceneObject>();
-    auto object = std::make_shared<Billboard>();
+    //auto object = std::make_shared<Billboard>();
+    auto object = std::make_shared<RainParticle>();
+    object->transform.position =
+    glm::vec3(0.0f, 5.0f, 0.0f);
+
+    object->reset(
+        glm::vec3(0.0f,5.0f,0.0f)
+    );
     object->mesh = quad;
     object->material = material;
 

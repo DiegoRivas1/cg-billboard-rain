@@ -38,6 +38,10 @@ add_executable(${PROJECT_NAME}
         graphics/stb_image.cpp
         scene/Billboard.h
         scene/Billboard.cpp
+        particles/RainParticle.h
+        particles/RainParticle.cpp
+        particles/ParticleEmitter.h
+        particles/ParticleEmitter.cpp
 )
 
 add_subdirectory(core)
