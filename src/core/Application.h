@@ -14,6 +14,7 @@
 #include "graphics/Camera.h"
 #include "scene/Scene.h"
 #include "graphics/QuadMesh.h"
+#include "particles/RainSystem.h"
 
 class Application
 {
@@ -57,6 +58,8 @@ private:
     Camera m_camera;
 
     Scene m_scene;
+
+    RainSystem m_rainSystem;
 };
 
 #endif //CG_BILLBOARD_RAIN_APPLICATION_H

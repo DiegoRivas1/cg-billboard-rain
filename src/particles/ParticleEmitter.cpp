@@ -1,9 +1,9 @@
 #include "particles/ParticleEmitter.h"
 
+#include <cstdlib>
+
 #include "particles/RainParticle.h"
 #include "scene/Scene.h"
-
-#include <cstdlib>
 
 ParticleEmitter::ParticleEmitter() = default;
 
@@ -15,26 +15,25 @@ void ParticleEmitter::initialize(
 
     m_particles.reserve(particleCount);
 
-    for (int i = 0; i < particleCount; i++)
+    for (int i = 0; i < particleCount; ++i)
     {
-        auto particle =
-            std::make_shared<RainParticle>();
+        auto particle = std::make_shared<RainParticle>();
 
         particle->reset(
             randomSpawnPosition()
         );
 
-        m_scene->add(particle);
+        scene.add(particle);
 
         m_particles.push_back(particle);
     }
 }
 
-void ParticleEmitter::update(float dt)
+void ParticleEmitter::update(float deltaTime)
 {
     for (auto& particle : m_particles)
     {
-        particle->update(dt);
+        particle->update(deltaTime);
 
         if (!particle->isAlive())
         {
@@ -65,9 +64,9 @@ glm::vec3 ParticleEmitter::randomSpawnPosition() const
         (static_cast<float>(rand()) / RAND_MAX - 0.5f)
         * m_depth;
 
-    return glm::vec3(
-        x,
-        m_height,
-        z
-    );
+    float y =
+        (static_cast<float>(rand()) / RAND_MAX)
+        * m_height;
+
+    return glm::vec3(x, y, z);
 }

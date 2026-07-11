@@ -42,6 +42,10 @@ add_executable(${PROJECT_NAME}
         particles/RainParticle.cpp
         particles/ParticleEmitter.h
         particles/ParticleEmitter.cpp
+        particles/RainSystem.h
+        particles/RainSystem.cpp
+        particles/RainResources.h
+        particles/RainResources.cpp
 )
 
 add_subdirectory(core)

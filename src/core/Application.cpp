@@ -6,8 +6,8 @@ Application::~Application()
 */
 
 #include "core/Application.h"
-#include "scene/Billboard.h"
-#include "particles/RainParticle.h"
+//#include "scene/Billboard.h"
+//#include "particles/RainParticle.h"
 
 #include <cstdlib>
 #include <GLFW/glfw3.h>
@@ -33,12 +33,14 @@ bool Application::initialize()
     }
 
     //
-    initializeScene();
+    //initializeScene();
+    m_rainSystem.initialize(m_scene);
     //
 
     return true;
 }
 
+/*
 void Application::initializeScene()
 {
     auto quad = std::make_shared<QuadMesh>();
@@ -65,6 +67,7 @@ void Application::initializeScene()
 
     m_scene.add(object);
 }
+*/
 
 int Application::run()
 {
@@ -110,7 +113,11 @@ void Application::processInput()
 
 void Application::update()
 {
-    m_camera.update(m_timer.getDeltaTime());
+    float dt = m_timer.getDeltaTime();
+    m_camera.update(dt);
+    m_rainSystem.update(dt);
+
+
 }
 
 void Application::render()

@@ -4,7 +4,14 @@ in vec2 TexCoord;
 
 out vec4 FragColor;
 
+uniform sampler2D uTexture;
+
 void main()
 {
-    FragColor = vec4(TexCoord, 0.0, 1.0);
+    vec4 color = texture(uTexture, TexCoord);
+
+    if(color.a < 0.1)
+        discard;
+
+    FragColor = color;
 }
