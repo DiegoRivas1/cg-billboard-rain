@@ -63,6 +63,11 @@ void ParticleEmitter::setCenter(const glm::vec3& center)
     m_center = center;
 }
 
+void ParticleEmitter::clear()
+{
+    m_particles.clear();
+}
+
 glm::vec3 ParticleEmitter::randomSpawnPosition() const
 {
     float x =

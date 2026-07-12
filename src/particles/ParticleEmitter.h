@@ -29,6 +29,7 @@ public:
     );
 
     void setCenter(const glm::vec3& center);
+    void clear();
 
 private:
 

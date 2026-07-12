@@ -12,3 +12,8 @@ void Scene::render(const Renderer& renderer)
         object->render(renderer);
     }
 }
+
+void Scene::clear()
+{
+    m_objects.clear();
+}

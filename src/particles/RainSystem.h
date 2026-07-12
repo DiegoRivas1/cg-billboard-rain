@@ -18,9 +18,12 @@ public:
 
     void setCenter(const glm::vec3& center);
 
+    void rebuild(Scene& scene, int particleCount);
+
 private:
 
     ParticleEmitter m_emitter;
+    int m_particleCount = 1000;
 };
 
 #endif
