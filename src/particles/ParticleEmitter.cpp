@@ -23,7 +23,9 @@ void ParticleEmitter::initialize(
             randomSpawnPosition()
         );
 
-        particle->update(static_cast<float>(rand()) / RAND_MAX * 5.0f);
+        //particle->update(static_cast<float>(rand()) / RAND_MAX * 5.0f);
+        particle->setLifetime(
+    static_cast<float>(rand()) / RAND_MAX * particle->getMaxLifetime() );
 
         scene.add(particle);
 

@@ -23,6 +23,12 @@ public:
 
     bool isAlive() const;
 
+    void setLifetime(float lifetime);
+
+    float getLifetime() const;
+
+    float getMaxLifetime() const;
+
 
 private:
 

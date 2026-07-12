@@ -41,6 +41,7 @@ private:
     float m_width = 20.0f;
     float m_depth = 20.0f;
     float m_height = 10.0f;
+    float m_wind = 0.5f;
 };
 
 #endif
