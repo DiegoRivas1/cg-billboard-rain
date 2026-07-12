@@ -116,6 +116,14 @@ void Application::update()
     float dt = m_timer.getDeltaTime();
     m_camera.update(dt);
 
+    if (m_gui.particleCountChanged())
+    {
+        m_rainSystem.rebuild(
+            m_scene,
+            m_gui.getParticleCount()
+        );
+    }
+
     m_rainSystem.setCenter(
         m_camera.getPosition()
     );

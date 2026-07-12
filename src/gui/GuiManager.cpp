@@ -3,7 +3,7 @@
 
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl2.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include <GLFW/glfw3.h>
 
@@ -17,14 +17,14 @@ bool GuiManager::initialize(GLFWwindow* window)
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
 
-    ImGui_ImplOpenGL2_Init();
+    ImGui_ImplOpenGL3_Init("#version 330");
 
     return true;
 }
 
 void GuiManager::beginFrame()
 {
-    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplOpenGL3_NewFrame();
 
     ImGui_ImplGlfw_NewFrame();
 
@@ -46,18 +46,32 @@ void GuiManager::endFrame()
 {
     ImGui::Render();
 
-    ImGui_ImplOpenGL2_RenderDrawData(
+    ImGui_ImplOpenGL3_RenderDrawData(
         ImGui::GetDrawData()
     );
 }
 
 void GuiManager::shutdown()
 {
-    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
 
     ImGui_ImplGlfw_Shutdown();
 
     ImGui::DestroyContext();
+}
+
+int GuiManager::getParticleCount() const
+{
+    return m_particleCount;
+}
+
+bool GuiManager::particleCountChanged()
+{
+    bool changed = m_particleCountChanged;
+
+    m_particleCountChanged = false;
+
+    return changed;
 }
 
 void GuiManager::drawDemoWindow()
@@ -79,7 +93,10 @@ void GuiManager::drawParticleWindow()
 {
     ImGui::Begin("Particles");
 
-    ImGui::Text("Particle system not implemented.");
+    if (ImGui::SliderInt("Particles", &m_particleCount, 100, 5000))
+    {
+        m_particleCountChanged = true;
+    }
 
     ImGui::End();
 }

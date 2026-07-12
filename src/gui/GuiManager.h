@@ -31,6 +31,10 @@ public:
 
     void shutdown();
 
+    int getParticleCount() const;
+
+    bool particleCountChanged();
+
 private:
 
     void drawDemoWindow();
@@ -40,6 +44,9 @@ private:
     void drawParticleWindow();
 
     void drawRendererWindow();
+
+    int m_particleCount = 1000;
+    bool m_particleCountChanged = false;
 };
 
 #endif //CG_BILLBOARD_RAIN_GUIMANAGER_H
