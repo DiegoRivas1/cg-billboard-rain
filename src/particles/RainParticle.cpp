@@ -40,12 +40,22 @@ void RainParticle::reset(const glm::vec3& position)
 
     m_lifetime = m_maxLifetime;
 
+    float speed = 8.0f + static_cast<float>(rand()) / RAND_MAX * 6.0f;
 
     m_velocity =
         glm::vec3(
             0.0f,
-            -10.0f,
+            -speed, //-10.0f,
             0.0f
+        );
+
+    float s = 0.02f + static_cast<float>(rand()) / RAND_MAX * 0.02f;
+
+    transform.scale =
+        glm::vec3(
+            s,
+            s * 5.0f,
+            1.0f
         );
 }
 

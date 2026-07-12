@@ -23,6 +23,8 @@ void ParticleEmitter::initialize(
             randomSpawnPosition()
         );
 
+        particle->update(static_cast<float>(rand()) / RAND_MAX * 5.0f);
+
         scene.add(particle);
 
         m_particles.push_back(particle);
