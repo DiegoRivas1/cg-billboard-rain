@@ -47,7 +47,7 @@ bool RainResources::initialize()
     m_texture = std::make_shared<Texture>();
 
     if (!m_texture->load(
-            "assets/textures/raindrop.png"))
+            "assets/textures/rain_blanco.png"))
     {
         return false;
     }
