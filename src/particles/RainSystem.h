@@ -16,6 +16,8 @@ public:
 
     void update(float deltaTime);
 
+    void setCenter(const glm::vec3& center);
+
 private:
 
     ParticleEmitter m_emitter;

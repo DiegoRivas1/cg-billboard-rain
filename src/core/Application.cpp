@@ -115,6 +115,11 @@ void Application::update()
 {
     float dt = m_timer.getDeltaTime();
     m_camera.update(dt);
+
+    m_rainSystem.setCenter(
+        m_camera.getPosition()
+    );
+
     m_rainSystem.update(dt);
 
 

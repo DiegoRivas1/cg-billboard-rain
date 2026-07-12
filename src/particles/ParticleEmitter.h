@@ -28,6 +28,8 @@ public:
         float height
     );
 
+    void setCenter(const glm::vec3& center);
+
 private:
 
     glm::vec3 randomSpawnPosition() const;
@@ -42,6 +44,8 @@ private:
     float m_depth = 20.0f;
     float m_height = 10.0f;
     float m_wind = 0.5f;
+
+    glm::vec3 m_center = glm::vec3(0.0f);
 };
 
 #endif

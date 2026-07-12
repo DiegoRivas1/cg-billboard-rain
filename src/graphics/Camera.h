@@ -17,6 +17,7 @@ public:
     void update(float dt);
 
     void setAspectRatio(float aspect);
+    const glm::vec3& getPosition() const;
 
     [[nodiscard]] const glm::mat4& getViewMatrix() const;
     [[nodiscard]] const glm::mat4& getProjectionMatrix() const;

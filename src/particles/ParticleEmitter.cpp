@@ -58,6 +58,11 @@ void ParticleEmitter::setSpawnArea(
     m_height = height;
 }
 
+void ParticleEmitter::setCenter(const glm::vec3& center)
+{
+    m_center = center;
+}
+
 glm::vec3 ParticleEmitter::randomSpawnPosition() const
 {
     float x =
@@ -72,5 +77,5 @@ glm::vec3 ParticleEmitter::randomSpawnPosition() const
         (static_cast<float>(rand()) / RAND_MAX)
         * m_height;
 
-    return glm::vec3(x, y, z);
+    return m_center + glm::vec3(x, y, z);
 }

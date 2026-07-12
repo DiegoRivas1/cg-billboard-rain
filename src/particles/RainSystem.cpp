@@ -22,3 +22,8 @@ void RainSystem::update(float deltaTime)
 {
     m_emitter.update(deltaTime);
 }
+
+void RainSystem::setCenter(const glm::vec3& center)
+{
+    m_emitter.setCenter(center);
+}
