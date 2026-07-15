@@ -25,6 +25,8 @@ public:
 
     void setLifetime(float lifetime);
 
+    void setWind(float wind);
+
     float getLifetime() const;
 
     float getMaxLifetime() const;
@@ -37,5 +39,7 @@ private:
     float m_lifetime;
 
     float m_maxLifetime;
+
+    float m_wind = 0.0f;
 };
 #endif //CG_BILLBOARD_RAIN_RAINPARTICLE_H

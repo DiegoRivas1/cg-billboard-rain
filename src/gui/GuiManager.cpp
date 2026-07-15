@@ -65,6 +65,11 @@ int GuiManager::getParticleCount() const
     return m_particleCount;
 }
 
+float GuiManager::getWind() const
+{
+    return m_wind;
+}
+
 bool GuiManager::particleCountChanged()
 {
     bool changed = m_particleCountChanged;
@@ -97,6 +102,13 @@ void GuiManager::drawParticleWindow()
     {
         m_particleCountChanged = true;
     }
+
+    ImGui::SliderFloat(
+        "Wind",
+        &m_wind,
+        -5.0f,
+        5.0f
+    );
 
     ImGui::End();
 }

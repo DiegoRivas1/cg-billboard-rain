@@ -128,6 +128,10 @@ void Application::update()
         m_camera.getPosition()
     );
 
+    m_rainSystem.setWind(
+        m_gui.getWind()
+    );
+
     m_rainSystem.update(dt);
 
 

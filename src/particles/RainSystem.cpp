@@ -28,6 +28,11 @@ void RainSystem::setCenter(const glm::vec3& center)
     m_emitter.setCenter(center);
 }
 
+void RainSystem::setWind(float wind)
+{
+    m_emitter.setWind(wind);
+}
+
 void RainSystem::rebuild(Scene& scene, int particleCount)
 {
     m_particleCount = particleCount;

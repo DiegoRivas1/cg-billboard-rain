@@ -27,6 +27,8 @@ void ParticleEmitter::initialize(
         particle->setLifetime(
     static_cast<float>(rand()) / RAND_MAX * particle->getMaxLifetime() );
 
+        particle->setWind(m_wind);
+
         scene.add(particle);
 
         m_particles.push_back(particle);
@@ -61,6 +63,16 @@ void ParticleEmitter::setSpawnArea(
 void ParticleEmitter::setCenter(const glm::vec3& center)
 {
     m_center = center;
+}
+
+void ParticleEmitter::setWind(float wind)
+{
+    m_wind = wind;
+
+    for (auto& particle : m_particles)
+    {
+        particle->setWind(wind);
+    }
 }
 
 void ParticleEmitter::clear()

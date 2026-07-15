@@ -44,7 +44,7 @@ void RainParticle::reset(const glm::vec3& position)
 
     m_velocity =
         glm::vec3(
-            0.0f,//m_wind,
+            m_wind,//viento
             -speed, //-10.0f,
             0.0f
         );
@@ -69,6 +69,11 @@ bool RainParticle::isAlive() const
 void RainParticle::setLifetime(float lifetime)
 {
     m_lifetime = lifetime;
+}
+
+void RainParticle::setWind(float wind)
+{
+    m_wind = wind;
 }
 
 float RainParticle::getLifetime() const

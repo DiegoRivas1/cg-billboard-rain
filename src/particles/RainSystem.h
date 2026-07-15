@@ -18,6 +18,8 @@ public:
 
     void setCenter(const glm::vec3& center);
 
+    void setWind(float wind);
+
     void rebuild(Scene& scene, int particleCount);
 
 private:

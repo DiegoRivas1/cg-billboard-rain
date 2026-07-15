@@ -29,13 +29,12 @@ public:
     );
 
     void setCenter(const glm::vec3& center);
+    void setWind(float wind);
     void clear();
 
 private:
 
     glm::vec3 randomSpawnPosition() const;
-
-private:
 
     Scene* m_scene = nullptr;
 
@@ -44,7 +43,7 @@ private:
     float m_width = 20.0f;
     float m_depth = 20.0f;
     float m_height = 10.0f;
-    float m_wind = 0.5f;
+    float m_wind = 0.0f;
 
     glm::vec3 m_center = glm::vec3(0.0f);
 };
