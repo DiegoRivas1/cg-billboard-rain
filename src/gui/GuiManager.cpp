@@ -70,6 +70,11 @@ float GuiManager::getWind() const
     return m_wind;
 }
 
+float GuiManager::getSpeed() const
+{
+    return m_speed;
+}
+
 bool GuiManager::particleCountChanged()
 {
     bool changed = m_particleCountChanged;
@@ -108,6 +113,13 @@ void GuiManager::drawParticleWindow()
         &m_wind,
         -5.0f,
         5.0f
+    );
+
+    ImGui::SliderFloat(
+        "Rain Speed",
+        &m_speed,
+        0.2f,
+        3.0f
     );
 
     ImGui::End();

@@ -33,6 +33,11 @@ void RainSystem::setWind(float wind)
     m_emitter.setWind(wind);
 }
 
+void RainSystem::setSpeedMultiplier(float multiplier)
+{
+    m_emitter.setSpeedMultiplier(multiplier);
+}
+
 void RainSystem::rebuild(Scene& scene, int particleCount)
 {
     m_particleCount = particleCount;

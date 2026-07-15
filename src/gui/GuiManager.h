@@ -34,6 +34,7 @@ public:
     int getParticleCount() const;
 
     float getWind() const;
+    float getSpeed() const;
 
     bool particleCountChanged();
 
@@ -50,6 +51,7 @@ private:
     int m_particleCount = 1000;
     bool m_particleCountChanged = false;
     float m_wind = 0.0f;
+    float m_speed = 1.0f;
 };
 
 #endif //CG_BILLBOARD_RAIN_GUIMANAGER_H

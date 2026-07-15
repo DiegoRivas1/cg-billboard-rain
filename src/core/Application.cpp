@@ -132,6 +132,10 @@ void Application::update()
         m_gui.getWind()
     );
 
+    m_rainSystem.setSpeedMultiplier(
+        m_gui.getSpeed()
+    );
+
     m_rainSystem.update(dt);
 
 

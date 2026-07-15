@@ -22,6 +22,8 @@ public:
 
     void rebuild(Scene& scene, int particleCount);
 
+    void setSpeedMultiplier(float multiplier);
+
 private:
 
     ParticleEmitter m_emitter;

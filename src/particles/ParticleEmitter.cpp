@@ -28,6 +28,7 @@ void ParticleEmitter::initialize(
     static_cast<float>(rand()) / RAND_MAX * particle->getMaxLifetime() );
 
         particle->setWind(m_wind);
+        particle->setSpeedMultiplier(m_speedMultiplier);
 
         scene.add(particle);
 
@@ -72,6 +73,16 @@ void ParticleEmitter::setWind(float wind)
     for (auto& particle : m_particles)
     {
         particle->setWind(wind);
+    }
+}
+
+void ParticleEmitter::setSpeedMultiplier(float multiplier)
+{
+    m_speedMultiplier = multiplier;
+
+    for (auto& particle : m_particles)
+    {
+        particle->setSpeedMultiplier(multiplier);
     }
 }
 

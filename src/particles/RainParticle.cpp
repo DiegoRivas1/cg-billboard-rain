@@ -25,7 +25,7 @@ void RainParticle::update(float deltaTime)
 
 
     transform.position +=
-        m_velocity * deltaTime;
+        m_velocity * m_speedMultiplier * deltaTime;
 
 
     m_lifetime -= deltaTime;
@@ -75,6 +75,12 @@ void RainParticle::setWind(float wind)
 {
     m_wind = wind;
 }
+
+void RainParticle::setSpeedMultiplier(float multiplier)
+{
+    m_speedMultiplier = multiplier;
+}
+
 
 float RainParticle::getLifetime() const
 {

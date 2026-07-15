@@ -30,6 +30,7 @@ public:
 
     void setCenter(const glm::vec3& center);
     void setWind(float wind);
+    void setSpeedMultiplier(float multiplier);
     void clear();
 
 private:
@@ -44,6 +45,7 @@ private:
     float m_depth = 20.0f;
     float m_height = 10.0f;
     float m_wind = 0.0f;
+    float m_speedMultiplier = 1.0f;
 
     glm::vec3 m_center = glm::vec3(0.0f);
 };
