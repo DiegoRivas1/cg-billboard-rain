@@ -124,6 +124,10 @@ void Application::update()
         );
     }
 
+    m_gui.setFPS(1.0f / dt);
+    m_gui.setDeltaTime(dt);
+    m_gui.setCameraPosition(m_camera.getPosition());
+
     m_rainSystem.setCenter(
         m_camera.getPosition()
     );

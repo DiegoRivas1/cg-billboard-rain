@@ -60,6 +60,21 @@ void GuiManager::shutdown()
     ImGui::DestroyContext();
 }
 
+void GuiManager::setFPS(float fps)
+{
+    m_fps = fps;
+}
+
+void GuiManager::setDeltaTime(float dt)
+{
+    m_deltaTime = dt;
+}
+
+void GuiManager::setCameraPosition(const glm::vec3& position)
+{
+    m_cameraPosition = position;
+}
+
 int GuiManager::getParticleCount() const
 {
     return m_particleCount;
@@ -93,8 +108,16 @@ void GuiManager::drawStatisticsWindow()
 {
     ImGui::Begin("Statistics");
 
-    ImGui::Text("FPS: (connect later)");
-    ImGui::Text("Frame system active");
+    ImGui::Text("FPS: %.1f", m_fps);
+    ImGui::Text("Delta time: %.3f ms", m_deltaTime * 1000.0f);
+
+    ImGui::Separator();
+
+    ImGui::Text("Camera");
+    ImGui::Text("X: %.2f", m_cameraPosition.x);
+    ImGui::Text("Y: %.2f", m_cameraPosition.y);
+    ImGui::Text("Z: %.2f", m_cameraPosition.z);
+
 
     ImGui::End();
 }

@@ -4,6 +4,7 @@
 
 #ifndef CG_BILLBOARD_RAIN_GUIMANAGER_H
 #define CG_BILLBOARD_RAIN_GUIMANAGER_H
+#include <glm/vec3.hpp>
 
 //#pragma once
 
@@ -31,6 +32,10 @@ public:
 
     void shutdown();
 
+    void setFPS(float fps);
+    void setDeltaTime(float dt);
+    void setCameraPosition(const glm::vec3& position);
+
     int getParticleCount() const;
 
     float getWind() const;
@@ -52,6 +57,9 @@ private:
     bool m_particleCountChanged = false;
     float m_wind = 0.0f;
     float m_speed = 1.0f;
+    float m_deltaTime = 0.0f;
+    float m_fps = 0.0f;
+    glm::vec3 m_cameraPosition = glm::vec3(0.0f);
 };
 
 #endif //CG_BILLBOARD_RAIN_GUIMANAGER_H
