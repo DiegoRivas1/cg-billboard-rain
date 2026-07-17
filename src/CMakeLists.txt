@@ -46,6 +46,14 @@ add_executable(${PROJECT_NAME}
         particles/RainSystem.cpp
         particles/RainResources.h
         particles/RainResources.cpp
+        scene/Ground.h
+        scene/Ground.cpp
+        scene/GroundResources.h
+        scene/GroundResources.cpp
+        graphics/GroundMesh.h
+        graphics/GroundMesh.cpp
+        #resources/Resources.h
+        #resources/Resources.cpp
 )
 
 add_subdirectory(core)

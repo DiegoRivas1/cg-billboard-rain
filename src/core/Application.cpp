@@ -1,16 +1,11 @@
-/*
-Application::~Application()
-{
-    shutdown();
-}
-*/
-
 #include "core/Application.h"
 //#include "scene/Billboard.h"
 //#include "particles/RainParticle.h"
 
 #include <cstdlib>
 #include <GLFW/glfw3.h>
+
+#include "scene/Ground.h"
 
 Application::Application() = default;
 Application::~Application() = default;
@@ -34,6 +29,9 @@ bool Application::initialize()
 
     //
     //initializeScene();
+    auto ground = std::make_shared<Ground>();
+    m_scene.add(ground);
+
     m_rainSystem.initialize(m_scene);
     //
 
@@ -122,6 +120,9 @@ void Application::update()
             m_scene,
             m_gui.getParticleCount()
         );
+
+        auto ground = std::make_shared<Ground>();
+        m_scene.add(ground);
     }
 
     m_gui.setFPS(1.0f / dt);
