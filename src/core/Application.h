@@ -15,6 +15,7 @@
 #include "scene/Scene.h"
 #include "graphics/QuadMesh.h"
 #include "particles/RainSystem.h"
+#include "scene/Ground.h"
 
 class Application
 {
@@ -60,6 +61,8 @@ private:
     Scene m_scene;
 
     RainSystem m_rainSystem;
+
+    std::shared_ptr<Ground> m_ground;
 };
 
 #endif //CG_BILLBOARD_RAIN_APPLICATION_H

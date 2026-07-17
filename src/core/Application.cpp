@@ -27,10 +27,12 @@ bool Application::initialize()
         return false;
     }
 
-    //
-    //initializeScene();
-    auto ground = std::make_shared<Ground>();
-    m_scene.add(ground);
+    //Piso
+    //auto ground = std::make_shared<Ground>();
+    //m_scene.add(ground);
+    m_ground = std::make_shared<Ground>();
+
+    m_scene.add(m_ground);
 
     m_rainSystem.initialize(m_scene);
     //
@@ -113,6 +115,14 @@ void Application::update()
 {
     float dt = m_timer.getDeltaTime();
     m_camera.update(dt);
+
+    if (m_ground)
+    {
+        glm::vec3 pos = m_camera.getPosition();
+
+        m_ground->transform.position.x = pos.x;
+        m_ground->transform.position.z = pos.z;
+    }
 
     if (m_gui.particleCountChanged())
     {
