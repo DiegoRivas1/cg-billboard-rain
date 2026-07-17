@@ -9,11 +9,12 @@ Camera::Camera()
       m_up(0.0f, 1.0f, 0.0f),
       m_worldUp(0.0f, 1.0f, 0.0f),
       m_yaw(-90.0f),
-      m_pitch(0.0f),
+      m_pitch(-15.0f),
       m_speed(5.0f),
       m_sensitivity(0.1f),
       m_aspectRatio(1280.0f / 720.0f)
 {
+    //m_pitch = -15.0f;
     updateVectors();
 
     m_projection = glm::perspective(
