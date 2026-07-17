@@ -10,6 +10,8 @@ Ground::Ground()
 
     material = GroundResources::getMaterial();
 
+    //std::cout<< "Ground material = "<< material.get()<< std::endl;
+
     transform.rotation.x = 0.0f;
 
     transform.scale = glm::vec3(

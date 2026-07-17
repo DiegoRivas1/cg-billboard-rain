@@ -15,8 +15,6 @@ bool Texture::load(const std::string& filename)
 {
     destroy();
 
-    m_filename = filename;
-
     stbi_set_flip_vertically_on_load(true);
 
     unsigned char* data = stbi_load(
@@ -51,6 +49,7 @@ bool Texture::load(const std::string& filename)
 
     glBindTexture(GL_TEXTURE_2D, m_textureID);
 
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(
         GL_TEXTURE_2D,
         0,
@@ -91,16 +90,9 @@ bool Texture::load(const std::string& filename)
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    std::cout << "Texture loaded: " << m_filename << " (ID: " << m_textureID << ", ptr: " << this << ")" << std::endl;
-
     stbi_image_free(data);
 
     return true;
-}
-
-std::string Texture::getFilename() const
-{
-    return m_filename;
 }
 
 void Texture::bind(unsigned int unit) const

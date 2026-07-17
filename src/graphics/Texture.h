@@ -23,8 +23,6 @@ public:
 
     void destroy();
 
-    std::string getFilename() const;
-
 private:
 
     GLuint m_textureID = 0;
@@ -32,7 +30,5 @@ private:
     int m_width = 0;
     int m_height = 0;
     int m_channels = 0;
-
-    std::string m_filename;
 };
 #endif //CG_BILLBOARD_RAIN_TEXTURE_H

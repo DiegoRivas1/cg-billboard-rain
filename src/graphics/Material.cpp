@@ -1,6 +1,5 @@
 #include "graphics/Material.h"
 #include <iostream>
-
 Material::Material(std::shared_ptr<Shader> shader)
     : m_shader(std::move(shader))
 {
@@ -33,12 +32,20 @@ void Material::bind(const Renderer& renderer) const
         renderer.getCameraUp()
     );
 
+    glActiveTexture(GL_TEXTURE0);
+
     if (m_texture)
     {
-        std::cout << "Material binding texture: " << m_texture->getFilename() << " ptr=" << m_texture.get() << std::endl;
+        //std::cout << "Binding own texture\n";
         m_texture->bind(0);
-        m_shader->setInt("uTexture", 0);
     }
+    else
+    {
+        std::cout << "Binding texture 0\n";
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    m_shader->setInt("uTexture", 0);
 }
 
 std::shared_ptr<Shader> Material::getShader() const

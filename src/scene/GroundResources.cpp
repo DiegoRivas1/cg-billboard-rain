@@ -16,8 +16,10 @@ std::shared_ptr<Material> GroundResources::m_material = nullptr;
 
 bool GroundResources::initialize()
 {
+    std::cout << "GroundResources::initialize()\n";
     if (m_material)
     {
+        std::cout << "Already initialized\n";
         return true;
     }
 
@@ -63,9 +65,9 @@ bool GroundResources::initialize()
             m_shader
         );
 
-    //m_material->setTexture(
-      //  m_texture
-    //);
+    m_material->setTexture(
+        m_texture
+    );
 
 
     return true;
