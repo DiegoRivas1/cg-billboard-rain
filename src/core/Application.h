@@ -47,6 +47,8 @@ private:
 
     void shutdown();
 
+    void createWorld();
+
 private:
 
     Window m_window;

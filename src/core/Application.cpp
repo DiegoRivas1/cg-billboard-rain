@@ -29,13 +29,10 @@ bool Application::initialize()
     }
 
     //Piso
-    //auto ground = std::make_shared<Ground>();
-    //m_scene.add(ground);
-    m_ground = std::make_shared<Ground>();
-
-    m_scene.add(m_ground);
-
-    m_treeSystem.initialize(m_scene);
+    //m_ground = std::make_shared<Ground>();
+    //m_scene.add(m_ground);
+    //m_treeSystem.initialize(m_scene);
+    createWorld();
 
     m_rainSystem.initialize(m_scene);
     //
@@ -129,13 +126,14 @@ void Application::update()
 
     if (m_gui.particleCountChanged())
     {
+        m_scene.clear();
+        createWorld();
         m_rainSystem.rebuild(
             m_scene,
             m_gui.getParticleCount()
         );
 
-        auto ground = std::make_shared<Ground>();
-        m_scene.add(ground);
+
     }
 
     m_gui.setFPS(1.0f / dt);
@@ -154,6 +152,10 @@ void Application::update()
         m_gui.getSpeed()
     );
 
+    m_treeSystem.update(
+        m_camera.getPosition(),
+        m_camera.getForward()
+    );
     m_rainSystem.update(dt);
 
 
@@ -192,4 +194,12 @@ void Application::shutdown()
     m_renderer.shutdown();
 
     m_window.shutdown();
+}
+
+void Application::createWorld()
+{
+    m_ground = std::make_shared<Ground>();
+    m_scene.add(m_ground);
+
+    m_treeSystem.initialize(m_scene);
 }

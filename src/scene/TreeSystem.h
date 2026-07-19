@@ -13,7 +13,7 @@ public:
 
     bool initialize(Scene& scene);
 
-    void update();
+    void update(const glm::vec3& cameraPosition, const glm::vec3& cameraForward);
 private:
     std::vector<std::shared_ptr<Tree>> m_trees;
     float m_radius = 40.0f;

@@ -42,7 +42,7 @@ void RainSystem::rebuild(Scene& scene, int particleCount)
 {
     m_particleCount = particleCount;
 
-    scene.clear();
+    //scene.clear();
 
     m_emitter.clear();
 
