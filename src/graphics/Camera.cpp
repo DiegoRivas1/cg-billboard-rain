@@ -2,6 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/constants.hpp>
+#include <iostream>
 
 Camera::Camera()
     : m_position(0.0f, 2.0f, 6.0f),
@@ -26,7 +27,10 @@ Camera::Camera()
 }
 
 void Camera::update(float dt)
-{
+{   std::cout
+        << m_position.x << " "
+        << m_position.y << " "
+        << m_position.z << std::endl;
     m_view = glm::lookAt(
         m_position,
         m_position + m_front,
@@ -94,9 +98,20 @@ void Camera::processKeyboard(const glm::vec3& dir, float dt)
 {
     float velocity = m_speed * dt;
 
-    m_position += m_front * dir.z * velocity;
+    // Only move in the XZ plane
+    glm::vec3 forward =
+    {
+        m_front.x,
+        0.0f,
+        m_front.z
+    };
+
+    forward = glm::normalize(forward);
+    // Only move in the XZ plane
+    //m_front = forward;
+    m_position += forward * dir.z * velocity;//m_position += m_front * dir.z * velocity;
     m_position += m_right * dir.x * velocity;
-    m_position += m_up * dir.y * velocity;
+    //m_position += m_up * dir.y * velocity;
 }
 
 void Camera::updateVectors()

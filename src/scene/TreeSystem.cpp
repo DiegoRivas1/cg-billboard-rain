@@ -12,15 +12,46 @@ bool TreeSystem::initialize(Scene& scene)
     for (int i = 0; i < m_treeCount; i++)
     {
         auto tree = std::make_shared<Tree>();
-        float scale = 4.5f + ((float)rand() / RAND_MAX) * 2.0f;
+        float scale =
+            4.5f +
+            ((float)rand() / RAND_MAX) * 2.0f;
 
-        float x =
-            ((float)rand() / RAND_MAX * 2.0f - 1.0f)
-            * m_radius;
+        //Gneracion de arboles que no se peguen
+        float x;
+        float z;
 
-        float z =
-            ((float)rand() / RAND_MAX * 2.0f - 1.0f)
-            * m_radius;
+        bool validPosition;
+
+        do
+        {
+            x =
+                ((float)rand() / RAND_MAX * 2.0f - 1.0f)
+                * m_radius;
+
+            z =
+                ((float)rand() / RAND_MAX * 2.0f - 1.0f)
+                * m_radius;
+
+            validPosition = true;
+
+            for (const auto& other : m_trees)
+            {
+                glm::vec2 p1(x, z);
+
+                glm::vec2 p2(
+                    other->transform.position.x,
+                    other->transform.position.z
+                );
+
+                if (glm::distance(p1, p2) < m_minDistance)
+                {
+                    validPosition = false;
+                    break;
+                }
+            }
+
+        }
+        while (!validPosition);
 
         tree->transform.position =
             glm::vec3(
