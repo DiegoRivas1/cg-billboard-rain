@@ -16,6 +16,7 @@
 #include "graphics/QuadMesh.h"
 #include "particles/RainSystem.h"
 #include "scene/Ground.h"
+#include "scene/TreeSystem.h"
 
 class Application
 {
@@ -61,6 +62,8 @@ private:
     Scene m_scene;
 
     RainSystem m_rainSystem;
+
+    TreeSystem m_treeSystem;
 
     std::shared_ptr<Ground> m_ground;
 };

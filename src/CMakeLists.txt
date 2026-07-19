@@ -52,6 +52,12 @@ add_executable(${PROJECT_NAME}
         scene/GroundResources.cpp
         graphics/GroundMesh.h
         graphics/GroundMesh.cpp
+        scene/Tree.h
+        scene/Tree.cpp
+        scene/TreeResources.h
+        scene/TreeResources.cpp
+        scene/TreeSystem.h
+        scene/TreeSystem.cpp
         #resources/Resources.h
         #resources/Resources.cpp
 )

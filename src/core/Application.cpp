@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "scene/Ground.h"
+#include "scene/Tree.h"
 
 Application::Application() = default;
 Application::~Application() = default;
@@ -33,6 +34,8 @@ bool Application::initialize()
     m_ground = std::make_shared<Ground>();
 
     m_scene.add(m_ground);
+
+    m_treeSystem.initialize(m_scene);
 
     m_rainSystem.initialize(m_scene);
     //
