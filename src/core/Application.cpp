@@ -23,11 +23,16 @@ bool Application::initialize()
         return false;
     }
 
-    if (!m_gui.initialize(m_window.getNativeWindow()))
+    if (!m_audio.initialize())
     {
         return false;
     }
 
+    if (!m_gui.initialize(m_window.getNativeWindow()))
+    {
+        return false;
+    }
+    //m_audio.shutdown();
     //Piso
     //m_ground = std::make_shared<Ground>();
     //m_scene.add(m_ground);
@@ -157,7 +162,7 @@ void Application::update()
         m_camera.getForward()
     );
     m_rainSystem.update(dt);
-
+    m_audio.update(dt);
 
 }
 
@@ -194,6 +199,8 @@ void Application::shutdown()
     m_renderer.shutdown();
 
     m_window.shutdown();
+
+    m_audio.shutdown();
 }
 
 void Application::createWorld()

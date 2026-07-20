@@ -17,6 +17,7 @@
 #include "particles/RainSystem.h"
 #include "scene/Ground.h"
 #include "scene/TreeSystem.h"
+#include "audio/AudioManager.h"
 
 class Application
 {
@@ -66,6 +67,7 @@ private:
     RainSystem m_rainSystem;
 
     TreeSystem m_treeSystem;
+    AudioManager m_audio;
 
     std::shared_ptr<Ground> m_ground;
 };

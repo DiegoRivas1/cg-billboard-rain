@@ -58,6 +58,8 @@ add_executable(${PROJECT_NAME}
         scene/TreeResources.cpp
         scene/TreeSystem.h
         scene/TreeSystem.cpp
+        audio/AudioManager.h
+        audio/AudioManager.cpp
         #resources/Resources.h
         #resources/Resources.cpp
 )
@@ -80,6 +82,8 @@ target_include_directories(${PROJECT_NAME}
 
         ${IMGUI_DIR}
         ${IMGUI_DIR}/backends
+
+        ${EXTERNAL_DIR}/miniaudio
 )
 
 add_custom_command(
