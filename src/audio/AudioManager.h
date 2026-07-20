@@ -5,7 +5,7 @@
 #ifndef CG_BILLBOARD_RAIN_AUDIOMANAGER_H
 #define CG_BILLBOARD_RAIN_AUDIOMANAGER_H
 #include <miniaudio.h>
-
+#include <iostream>
 class AudioManager
 {
 public:
@@ -26,6 +26,8 @@ public:
     void playThunder();
 
     void setRainVolume(float volume);
+
+    void setRainIntensity(float intensity);
 
 private:
 

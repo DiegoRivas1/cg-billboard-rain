@@ -13,6 +13,8 @@ struct GLFWwindow;
 class GuiManager
 {
 public:
+    static constexpr int MIN_PARTICLES = 100;
+    static constexpr int MAX_PARTICLES = 5000;
     GuiManager() = default;
     ~GuiManager() = default;
 

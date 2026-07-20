@@ -126,7 +126,7 @@ void GuiManager::drawParticleWindow()
 {
     ImGui::Begin("Particles");
 
-    if (ImGui::SliderInt("Particles", &m_particleCount, 100, 5000))
+    if (ImGui::SliderInt("Particles", &m_particleCount, GuiManager::MIN_PARTICLES, GuiManager::MAX_PARTICLES))
     {
         m_particleCountChanged = true;
     }

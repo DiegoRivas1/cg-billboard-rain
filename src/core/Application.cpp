@@ -40,6 +40,10 @@ bool Application::initialize()
     createWorld();
 
     m_rainSystem.initialize(m_scene);
+
+    m_audio.playRainLoop();
+
+    m_audio.setRainVolume(0.35f);
     //
 
     return true;
@@ -138,6 +142,12 @@ void Application::update()
             m_gui.getParticleCount()
         );
 
+        //AUDIO
+        float intensity =
+            static_cast<float>(m_gui.getParticleCount()) /
+            GuiManager::MAX_PARTICLES;
+
+        m_audio.setRainIntensity(intensity);
 
     }
 
