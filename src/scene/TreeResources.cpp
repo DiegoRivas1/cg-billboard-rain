@@ -34,8 +34,8 @@ bool TreeResources::initialize()
     m_shader = std::make_shared<Shader>();
 
     if (!m_shader->load(
-            "assets/shaders/billboard/vertex.glsl",
-            "assets/shaders/billboard/fragment.glsl"))
+            "assets/shaders/tree/vertex.glsl",
+            "assets/shaders/tree/fragment.glsl"))
     {
         return false;
     }

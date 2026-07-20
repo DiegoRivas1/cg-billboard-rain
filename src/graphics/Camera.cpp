@@ -27,10 +27,7 @@ Camera::Camera()
 }
 
 void Camera::update(float dt)
-{   std::cout
-        << m_position.x << " "
-        << m_position.y << " "
-        << m_position.z << std::endl;
+{
     m_view = glm::lookAt(
         m_position,
         m_position + m_front,

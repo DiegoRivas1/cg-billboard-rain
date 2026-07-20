@@ -56,11 +56,12 @@ bool TreeSystem::initialize(Scene& scene)
         tree->transform.position =
             glm::vec3(
                 x,
-                4.0f,
+                0.0f,//scale * 0.5f
                 z
             );
 
         tree->transform.scale = glm::vec3(scale, scale, 1.0f);
+        //tree->transform.position.y = scale * 0.5f;
 
         scene.add(tree);
 
@@ -105,7 +106,8 @@ void TreeSystem::update(
 
             newPos.x += offsetX;
 
-            newPos.y = 3.0f;
+            float scale = tree->transform.scale.x;
+            newPos.y = 0.0f; //scale * 0.5f
 
             tree->transform.position = newPos;
         }
