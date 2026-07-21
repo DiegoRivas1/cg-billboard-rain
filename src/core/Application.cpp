@@ -144,14 +144,16 @@ void Application::update()
             m_gui.getParticleCount()
         );
 
-        //AUDIO
-        float intensity =
-            static_cast<float>(m_gui.getParticleCount()) /
-            GuiManager::MAX_PARTICLES;
 
-        m_audio.setRainIntensity(intensity);
 
     }
+
+    //AUDIO
+    float intensity =
+        static_cast<float>(m_gui.getParticleCount()) /
+        GuiManager::MAX_PARTICLES;
+
+    m_audio.setRainIntensity(intensity);
 
     m_gui.setFPS(1.0f / dt);
     m_gui.setDeltaTime(dt);

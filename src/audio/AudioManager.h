@@ -36,5 +36,9 @@ private:
     ma_sound m_rainSound;
 
     bool m_initialized = false;
+
+    ma_sound m_thunder1;
+    ma_sound m_thunder2;
+    ma_sound m_thunder3;
 };
 #endif //CG_BILLBOARD_RAIN_AUDIOMANAGER_H
