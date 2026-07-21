@@ -60,6 +60,10 @@ add_executable(${PROJECT_NAME}
         scene/TreeSystem.cpp
         audio/AudioManager.h
         audio/AudioManager.cpp
+        weather/LightingSystem.h
+        weather/LightingSystem.cpp
+        weather/WeatherSystem.h
+        weather/WeatherSystem.cpp
         #resources/Resources.h
         #resources/Resources.cpp
 )

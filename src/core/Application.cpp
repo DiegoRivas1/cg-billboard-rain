@@ -44,6 +44,8 @@ bool Application::initialize()
     m_audio.playRainLoop();
 
     m_audio.setRainVolume(0.35f);
+
+    m_weather.initialize(&m_audio);
     //
 
     return true;
@@ -173,7 +175,7 @@ void Application::update()
     );
     m_rainSystem.update(dt);
     m_audio.update(dt);
-
+    m_weather.update(dt);
 }
 
 void Application::render()
@@ -187,6 +189,10 @@ void Application::render()
         m_camera.getRight(),
         m_camera.getUp(),
         m_camera.getForward()
+    );
+
+    m_renderer.setLightningIntensity(
+        m_weather.getLightningIntensity()
     );
 
     m_renderer.beginFrame();

@@ -31,6 +31,7 @@ public:
 
     void setViewProjection(const glm::mat4& view, const glm::mat4& projection);
     void setCameraVectors(const glm::vec3& right, const glm::vec3& up, const glm::vec3& forward);
+    void setLightningIntensity(float intensity);
     const glm::mat4& getViewMatrix() const;
     const glm::mat4& getProjectionMatrix() const;
 
@@ -48,6 +49,7 @@ private:
     glm::vec3 m_cameraRight;
     glm::vec3 m_cameraUp;
     glm::vec3 m_cameraForward;
+    float m_lightningIntensity = 0.0f;
 
 };
 

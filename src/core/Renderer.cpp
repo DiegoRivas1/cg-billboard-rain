@@ -27,6 +27,27 @@ bool Renderer::initialize()
 
 void Renderer::beginFrame()
 {
+    if (m_lightningIntensity > 0.0f)
+    {
+        float flash = m_lightningIntensity;
+
+        glClearColor(
+            0.10f + flash * 0.80f,
+            0.12f + flash * 0.78f,
+            0.18f + flash * 0.72f,
+            1.0f
+        );
+    }
+    else
+    {
+        glClearColor(
+            0.10f,
+            0.12f,
+            0.18f,
+            1.0f
+        );
+    }
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -61,6 +82,11 @@ void Renderer::setCameraVectors(const glm::vec3& right, const glm::vec3& up, con
     m_cameraRight = right;
     m_cameraUp = up;
     m_cameraForward = forward;
+}
+
+void Renderer::setLightningIntensity(float intensity)
+{
+    m_lightningIntensity = intensity;
 }
 
 const glm::vec3& Renderer::getCameraRight() const
