@@ -1,0 +1,247 @@
+\chapter{Diseño e Implementación}
+
+\section{Arquitectura General del Proyecto}
+
+Durante el desarrollo se optó por una arquitectura modular, en la cual cada componente del sistema posee una responsabilidad específica. Esta organización permite mantener un bajo acoplamiento entre módulos, facilitando tanto el mantenimiento del código como la incorporación de nuevas funcionalidades.
+
+La estructura final del proyecto quedó organizada como se muestra en la Figura \ref{fig:estructura}.
+
+\begin{figure}[H]
+\centering
+\begin{verbatim}
+cg-billboard-rain
+│
+├── assets
+│   ├── audio
+│   ├── shaders
+│   └── textures
+│
+├── docs
+│
+├── external
+│
+├── src
+│   ├── audio
+│   ├── core
+│   ├── graphics
+│   ├── gui
+│   ├── math
+│   ├── particles
+│   ├── resources
+│   ├── scene
+│   ├── weather
+│   └── utils
+│
+├── CMakeLists.txt
+└── README.md
+\end{verbatim}
+\caption{Estructura general del proyecto.}
+\label{fig:estructura}
+\end{figure}
+
+Cada directorio contiene un conjunto de clases relacionadas con una funcionalidad específica del sistema.
+
+\section{Arquitectura por Módulos}
+
+La Figura \ref{fig:arquitectura} presenta la arquitectura general del sistema desarrollado. La clase \texttt{Application} coordina todos los subsistemas, mientras que cada módulo posee una responsabilidad específica dentro de la simulación.
+
+\begin{figure}[H]
+\centering
+
+\begin{tikzpicture}[
+node distance=1.2cm,
+every node/.style={draw, rounded corners, align=center, minimum width=3.8cm, minimum height=0.9cm},
+>=stealth
+]
+
+%-------------------------
+% Nodos
+%-------------------------
+
+\node (app) {\textbf{Application}};
+
+\node (renderer) [below left=1.4cm and 2.2cm of app] {Renderer};
+\node (gui)      [below=1.4cm of app] {GUI};
+\node (audio)    [below right=1.4cm and 2.2cm of app] {Audio};
+
+\node (weather)  [right=3cm of gui] {Weather};
+
+\node (scene) [below=2cm of gui] {\textbf{Scene}};
+
+\node (ground) [below left=1.3cm and 2cm of scene] {Ground};
+\node (trees)  [below=1.3cm of scene] {TreeSystem};
+\node (rain)   [below right=1.3cm and 2cm of scene] {RainSystem};
+
+\node (object) [below=2cm of trees] {\textbf{SceneObject}};
+
+\node (transform) [below=1.3cm of object]
+{Transform\\Mesh\\Material};
+
+\node (resources) [below=1.3cm of transform]
+{Shader\\Texture};
+
+%-------------------------
+% Flechas
+%-------------------------
+
+\draw[->] (app) -- (renderer);
+\draw[->] (app) -- (gui);
+\draw[->] (app) -- (audio);
+\draw[->] (app) -- (weather);
+
+\draw[->] (renderer) -- (scene);
+
+\draw[->] (scene) -- (ground);
+\draw[->] (scene) -- (trees);
+\draw[->] (scene) -- (rain);
+
+\draw[->] (ground) -- (object);
+\draw[->] (trees) -- (object);
+\draw[->] (rain) -- (object);
+
+\draw[->] (object) -- (transform);
+
+\draw[->] (transform) -- (resources);
+
+\end{tikzpicture}
+
+\caption{Arquitectura general del sistema desarrollado.}
+\label{fig:arquitectura}
+
+\end{figure}
+
+
+La clase \texttt{Application} constituye el punto central del sistema y coordina el funcionamiento de todos los módulos.
+
+
+\section{Clase Application}
+
+La clase \texttt{Application} representa el núcleo del programa. Su responsabilidad consiste en inicializar todos los subsistemas, ejecutar el ciclo principal de la aplicación y liberar correctamente los recursos al finalizar la ejecución.
+
+Durante la fase de inicialización se realizan las siguientes tareas:
+
+\begin{itemize}
+\item Creación de la ventana mediante GLFW.
+\item Inicialización del renderer.
+\item Inicialización del sistema de audio.
+\item Inicialización de Dear ImGui.
+\item Construcción del escenario.
+\item Inicialización del sistema de lluvia.
+\item Inicio del sonido ambiental.
+\end{itemize}
+
+Posteriormente comienza el ciclo principal del programa, mostrado en la Figura \ref{fig:gameloop}.
+
+
+\section{Ciclo Principal}
+
+La aplicación ejecuta continuamente un ciclo hasta que el usuario decide cerrar la ventana.
+
+Cada iteración realiza las siguientes operaciones:
+
+\begin{enumerate}
+
+\item Lectura del teclado.
+
+\item Actualización de la cámara.
+
+\item Actualización del terreno.
+
+\item Actualización del sistema de árboles.
+
+\item Actualización del sistema de lluvia.
+
+\item Actualización del sistema de audio.
+
+\item Actualización de la interfaz gráfica.
+
+\item Renderizado de toda la escena.
+
+\end{enumerate}
+
+Este proceso garantiza que todos los elementos permanezcan sincronizados durante la ejecución.
+
+\section{Renderer}
+
+El módulo Renderer encapsula todas las operaciones relacionadas con OpenGL.
+
+Entre sus responsabilidades se encuentran:
+
+\begin{itemize}
+
+\item Configuración del viewport.
+
+\item Configuración del color de limpieza.
+
+\item Activación del Depth Test.
+
+\item Activación del Alpha Blending.
+
+\item Envío de matrices de vista y proyección.
+
+\item Envío de los vectores de la cámara.
+
+\item Control del efecto de relámpago.
+
+\end{itemize}
+
+De esta manera, el resto del proyecto nunca realiza llamadas directas a OpenGL.
+
+\section{Scene}
+
+La clase Scene actúa como un contenedor de todos los objetos presentes en el escenario.
+
+Cada elemento derivado de SceneObject es almacenado dentro de un vector dinámico.
+
+Durante el renderizado únicamente es necesario recorrer dicho vector para dibujar todos los objetos de manera secuencial.
+
+Esta aproximación simplifica considerablemente la administración de recursos gráficos.
+
+\section{SceneObject}
+
+Todos los elementos visibles heredan de la clase SceneObject.
+
+Cada objeto posee tres componentes fundamentales:
+
+\begin{itemize}
+
+\item Transform.
+
+\item Mesh.
+
+\item Material.
+
+\end{itemize}
+
+Gracias a esta estructura fue posible reutilizar la misma arquitectura para representar lluvia, árboles y terreno sin modificar el renderer.
+
+\section{Transform}
+
+Cada objeto almacena su transformación mediante la clase Transform.
+
+Esta clase mantiene la información correspondiente a:
+
+\begin{itemize}
+
+\item Posición.
+
+\item Rotación.
+
+\item Escala.
+
+\end{itemize}
+
+A partir de estos valores se construye la matriz de modelo enviada posteriormente al Vertex Shader.
+
+La utilización de esta clase permitió modificar cualquier objeto del escenario sin alterar directamente sus vértices.
+
+
+\section{Cámara}
+
+La cámara implementa un sistema de navegación libre sobre el plano XZ.
+
+El usuario puede desplazarse utilizando las teclas W, A, S y D.
+
+Para evitar movimientos verticales no deseados, el vector Forward utilizado para el desplazamiento se proyecta sobre el plano horizontal antes de actualizar la posición de la cámara.
+
+Esta modificación evita que el terreno parezca inclinarse al avanzar y mantiene una navegación más natural dentro del escenario.

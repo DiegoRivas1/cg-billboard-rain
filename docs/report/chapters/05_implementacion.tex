@@ -1,0 +1,431 @@
+\chapter{Implementación}
+
+En este capítulo se describe el desarrollo de cada uno de los módulos implementados para la simulación de lluvia mediante billboards utilizando OpenGL. La implementación se realizó siguiendo una arquitectura modular, donde cada componente posee una responsabilidad claramente definida, facilitando el mantenimiento y la incorporación de nuevas funcionalidades.
+
+\section{Implementación del sistema de Billboards}
+
+El elemento fundamental del proyecto corresponde a los billboards, utilizados para representar tanto las gotas de lluvia como los árboles del escenario.
+
+Un billboard consiste en un plano bidimensional (quad) cuya orientación se actualiza automáticamente para mantenerse siempre de frente a la cámara. Gracias a esta técnica es posible representar objetos aparentemente tridimensionales utilizando únicamente cuatro vértices, reduciendo considerablemente la carga de procesamiento gráfico.
+
+Para ello se implementó la clase \texttt{QuadMesh}, encargada de construir la geometría básica utilizada por todos los billboards del proyecto.
+
+Los vértices definidos corresponden a un cuadrado centrado en el origen del sistema de coordenadas local.
+
+\begin{itemize}
+\item 4 vértices.
+\item 6 índices (2 triángulos).
+\item Coordenadas de textura normalizadas.
+\end{itemize}
+
+Cada objeto billboard comparte esta misma geometría, diferenciándose únicamente por su textura, escala y posición.
+
+Esta estrategia permite reutilizar recursos gráficos y disminuir el consumo de memoria de la aplicación.
+
+
+
+\section{Shaders para Billboards}
+
+El comportamiento de los billboards se implementó mediante un Vertex Shader especializado.
+
+A diferencia de un objeto tridimensional convencional, cuya orientación depende completamente de la matriz de modelo, un billboard calcula su posición utilizando directamente los vectores de orientación de la cámara.
+
+Durante cada cuadro se envían al shader los vectores:
+
+\begin{itemize}
+
+\item Right
+\item Up
+
+\end{itemize}
+
+A partir de estos vectores se reconstruye la orientación del quad dentro del espacio mundial.
+
+De esta forma, sin importar la dirección en la que observe el usuario, el billboard permanece siempre orientado hacia la cámara.
+
+El cálculo realizado en el shader puede expresarse mediante la siguiente ecuación:
+
+\[
+P_{world}
+=
+C
++
+Right \cdot x
++
+Up \cdot y
+\]
+
+donde:
+
+\begin{itemize}
+
+\item $C$ representa el centro del billboard.
+
+\item $Right$ corresponde al eje horizontal de la cámara.
+
+\item $Up$ representa el eje vertical de la cámara.
+
+\item $(x,y)$ son las coordenadas locales de cada vértice.
+
+\end{itemize}
+
+Posteriormente, el Fragment Shader aplica la textura correspondiente y descarta automáticamente los píxeles transparentes utilizando el canal alfa.
+
+Este procedimiento permite representar árboles y gotas de lluvia con una apariencia tridimensional utilizando únicamente un plano bidimensional.
+
+\section{Implementación del sistema de partículas}
+
+El efecto de lluvia fue implementado mediante un sistema de partículas diseñado específicamente para representar miles de gotas simultáneamente.
+
+La arquitectura desarrollada se divide en tres componentes principales:
+
+\begin{itemize}
+
+\item RainParticle
+
+\item ParticleEmitter
+
+\item RainSystem
+
+\end{itemize}
+
+Cada uno de ellos posee una responsabilidad específica dentro del ciclo de simulación.
+
+\subsection{Clase RainParticle}
+
+Cada gota de lluvia se representa mediante una instancia de la clase \texttt{RainParticle}.
+
+Cada partícula almacena información relacionada con:
+
+\begin{itemize}
+
+\item Posición.
+
+\item Velocidad.
+
+\item Estado de vida.
+
+\item Material gráfico.
+
+\item Transformación.
+
+\end{itemize}
+
+Durante cada actualización la posición de la partícula se modifica considerando la velocidad de caída y la influencia del viento.
+
+Cuando la partícula alcanza el suelo, ésta se reinicializa automáticamente sobre el área de emisión, permitiendo reutilizar continuamente los mismos objetos sin necesidad de crear nuevas instancias durante la ejecución.
+
+\subsection{Clase ParticleEmitter}
+
+La clase \texttt{ParticleEmitter} administra todas las partículas existentes.
+
+Su responsabilidad consiste en:
+
+\begin{itemize}
+
+\item Crear las partículas.
+
+\item Almacenarlas.
+
+\item Actualizar cada una de ellas.
+
+\item Reiniciar aquellas que alcanzan el suelo.
+
+\end{itemize}
+
+Esta aproximación evita operaciones frecuentes de asignación dinámica de memoria, mejorando el rendimiento general del sistema.
+
+\subsection{Clase RainSystem}
+
+El módulo RainSystem coordina completamente la simulación de lluvia.
+
+Entre sus responsabilidades principales se encuentran:
+
+\begin{itemize}
+
+\item Inicializar el emisor.
+
+\item Reconstruir el sistema cuando cambia el número de partículas.
+
+\item Actualizar la intensidad del viento.
+
+\item Actualizar la velocidad de caída.
+
+\item Mantener la lluvia centrada alrededor de la cámara.
+
+\end{itemize}
+
+La lluvia no permanece fija dentro del escenario. En su lugar, el área de emisión acompaña continuamente al usuario, creando la sensación de una precipitación infinita sin necesidad de simular un escenario de grandes dimensiones.
+
+Esta técnica reduce considerablemente el consumo de memoria y mantiene un número constante de partículas activas independientemente de la distancia recorrida por el usuario
+
+
+\section{Implementación del escenario}
+
+Con el objetivo de proporcionar un entorno visual que permitiera apreciar correctamente el efecto de lluvia, se implementó un escenario compuesto por un terreno y un conjunto de árboles distribuidos alrededor del usuario.
+
+El escenario fue desarrollado bajo una arquitectura modular, donde cada elemento administra sus propios recursos gráficos, permitiendo reutilizar modelos, materiales y texturas sin generar duplicados innecesarios en memoria.
+
+La escena completa es administrada mediante la clase \texttt{Scene}, la cual mantiene una colección de objetos renderizables y delega su actualización y dibujado al renderizador principal.
+
+\subsection{Terreno (Ground)}
+
+El terreno representa la superficie sobre la cual se desarrolla la simulación.
+
+Para su implementación se construyó un plano compuesto únicamente por cuatro vértices y dos triángulos, utilizando una textura repetida múltiples veces para evitar pérdida de calidad al aumentar su tamaño.
+
+Durante el desarrollo se decidió incrementar las dimensiones del plano respecto a la versión inicial para impedir que el usuario observara el borde del escenario al desplazarse.
+
+La textura del terreno utiliza coordenadas UV superiores al rango $[0,1]$, permitiendo que ésta se repita automáticamente sobre toda la superficie mediante la configuración de repetición (\textit{texture wrapping}) de OpenGL.
+
+Adicionalmente, el terreno no permanece completamente fijo dentro del mundo.
+
+En cada actualización su posición se sincroniza con las coordenadas XZ de la cámara, mientras la altura permanece constante.
+
+Esta técnica produce la sensación de un terreno prácticamente infinito utilizando únicamente un único plano renderizado.
+
+\subsection{Sistema de árboles}
+
+Los árboles fueron implementados utilizando la misma técnica de billboards empleada para las partículas, aunque con un comportamiento diferente.
+
+Cada árbol corresponde a un plano bidimensional con una textura PNG que incluye canal alfa para eliminar automáticamente el fondo mediante el Fragment Shader.
+
+Todos los árboles comparten:
+
+\begin{itemize}
+
+\item La misma geometría.
+
+\item El mismo shader.
+
+\item El mismo material.
+
+\item La misma textura.
+
+\end{itemize}
+
+Únicamente cambian su posición y escala dentro del escenario.
+
+Esta estrategia reduce significativamente el consumo de memoria gráfica.
+
+
+\subsection{Distribución aleatoria}
+
+Los árboles son generados utilizando posiciones aleatorias dentro de un radio determinado alrededor del origen.
+
+Sin embargo, una distribución completamente aleatoria puede producir superposición entre árboles, disminuyendo el realismo de la escena.
+
+Para evitar este problema se implementó una distancia mínima entre árboles.
+
+Cada nueva posición generada se compara contra todos los árboles existentes.
+
+Si la distancia es menor al umbral establecido, la posición es descartada y se genera una nueva coordenada aleatoria.
+
+Este procedimiento continúa hasta encontrar una posición válida.
+
+Gracias a este algoritmo se obtiene una distribución visualmente uniforme sobre todo el escenario.
+
+\subsection{Escalado aleatorio}
+
+Con el propósito de evitar que todos los árboles posean exactamente el mismo tamaño, cada instancia recibe una escala generada aleatoriamente dentro de un intervalo previamente definido.
+
+Esta variación produce una escena más natural y disminuye la percepción de repetición de la textura.
+
+Cada árbol conserva su propia escala incluso cuando es reposicionado posteriormente durante la simulación.
+
+\subsection{Reubicación dinámica}
+
+Debido a que el escenario representa un bosque virtualmente infinito, no resulta eficiente generar miles de árboles.
+
+En su lugar se implementó un sistema de reciclaje.
+
+Cada árbol verifica continuamente su distancia respecto a la cámara.
+
+Cuando un árbol supera el radio máximo definido para la simulación, éste es trasladado automáticamente hacia una nueva posición ubicada delante del usuario.
+
+La nueva ubicación incorpora un desplazamiento aleatorio horizontal para evitar patrones repetitivos.
+
+Este procedimiento mantiene aproximadamente constante el número de árboles presentes en memoria mientras genera la sensación de un bosque continuo.
+
+
+\section{Sistema de audio}
+
+Para complementar la experiencia visual se incorporó un sistema de audio utilizando la biblioteca Miniaudio.
+
+Esta biblioteca fue seleccionada debido a que consiste en un único archivo de cabecera, es multiplataforma y no requiere dependencias adicionales para reproducir archivos WAV.
+
+El proyecto organiza todos los recursos de sonido dentro del directorio:
+
+\begin{center}
+
+\texttt{assets/audio}
+
+\end{center}
+
+Actualmente se utilizan efectos correspondientes a:
+
+\begin{itemize}
+
+\item Lluvia continua.
+
+\item Truenos.
+
+\end{itemize}
+
+\subsection{Clase AudioManager}
+
+Toda la reproducción sonora se encuentra encapsulada dentro de la clase \texttt{AudioManager}.
+
+Esta clase administra la inicialización del motor de audio, la carga de archivos, el control del volumen y la reproducción de efectos.
+
+Entre las funciones implementadas destacan:
+
+\begin{itemize}
+
+\item Inicialización del motor.
+
+\item Reproducción continua de lluvia.
+
+\item Control del volumen.
+
+\item Control de la velocidad de reproducción.
+
+\item Reproducción de efectos individuales.
+
+\item Liberación de recursos.
+
+\end{itemize}
+
+De esta forma el resto de la aplicación permanece completamente desacoplado de la biblioteca Miniaudio.
+
+\subsection{Sincronización con la lluvia}
+
+El sonido de la lluvia responde dinámicamente a la intensidad configurada por el usuario.
+
+Cuando aumenta el número de partículas desde la interfaz gráfica, también incrementa el volumen del sonido y la velocidad de reproducción del efecto ambiental.
+
+Este comportamiento genera una percepción auditiva coherente con la cantidad de lluvia observada en pantalla.
+
+La intensidad se calcula normalizando el número actual de partículas respecto al máximo permitido por la interfaz gráfica.
+
+\section{Sistema meteorológico}
+
+Con el propósito de incrementar el realismo de la simulación, además del sistema de partículas se implementó un módulo encargado de representar fenómenos meteorológicos complementarios.
+
+Actualmente dicho módulo incorpora efectos de relámpagos que modifican temporalmente la iluminación general de la escena.
+
+El sistema fue diseñado de forma independiente del renderizador y del sistema de partículas, permitiendo extender fácilmente la simulación mediante nuevos fenómenos atmosféricos como niebla, viento variable o ciclos de día y noche.
+
+\subsection{Simulación de relámpagos}
+
+Los relámpagos fueron implementados mediante un incremento temporal de la iluminación del fondo de la escena.
+
+Cuando ocurre un evento de rayo, el sistema incrementa una variable denominada \texttt{lightningIntensity}, cuyo valor representa la intensidad instantánea del destello.
+
+Durante cada actualización esta intensidad disminuye progresivamente hasta volver a cero, produciendo una transición suave en lugar de un cambio brusco.
+
+Este comportamiento simula el destello característico de un relámpago observado durante una tormenta.
+
+\subsection{Integración con el renderizador}
+
+La intensidad calculada por el sistema meteorológico es enviada al renderizador mediante una interfaz pública.
+
+Antes de limpiar el framebuffer, el renderizador modifica dinámicamente el color utilizado por \texttt{glClearColor()}.
+
+Cuando no existe ningún relámpago activo, el fondo conserva un color oscuro que representa una tormenta nocturna.
+
+Durante un destello, la intensidad se suma temporalmente a los componentes RGB del color de fondo, generando una iluminación global de toda la escena.
+
+Debido a que el efecto se aplica directamente durante el proceso de limpieza del framebuffer, no resulta necesario modificar los shaders de los distintos objetos renderizados.
+
+\section{Interfaz gráfica}
+
+Para facilitar la interacción con la simulación se incorporó una interfaz gráfica desarrollada utilizando la biblioteca Dear ImGui.
+
+Esta biblioteca permite construir interfaces en tiempo real orientadas principalmente al desarrollo y depuración de aplicaciones gráficas.
+
+Toda la lógica correspondiente a la interfaz fue encapsulada dentro de la clase \texttt{GuiManager}, evitando mezclar código de renderizado con la lógica de presentación.
+
+\subsection{Panel de control}
+
+La interfaz desarrollada permite modificar diversos parámetros de la simulación durante su ejecución.
+
+Entre las opciones disponibles se encuentran:
+
+\begin{itemize}
+
+\item Número de partículas de lluvia.
+
+\item Intensidad del viento.
+
+\item Velocidad de caída de las partículas.
+
+\item Información del rendimiento (FPS).
+
+\item Tiempo por cuadro (Frame Time).
+
+\item Posición actual de la cámara.
+
+\end{itemize}
+
+La modificación de cualquiera de estos parámetros produce una actualización inmediata del comportamiento del sistema sin necesidad de reiniciar la aplicación.
+
+\subsection{Comunicación con el sistema}
+
+La interfaz no modifica directamente los componentes internos de la simulación.
+
+En su lugar, actúa como un intermediario que proporciona los parámetros configurados por el usuario.
+
+Durante cada iteración del ciclo principal, la aplicación consulta dichos valores y actualiza los distintos módulos correspondientes.
+
+Por ejemplo, un cambio en el número de partículas provoca la reconstrucción del sistema de lluvia y la actualización simultánea de la intensidad del sonido ambiental.
+
+Este diseño mantiene un bajo acoplamiento entre la interfaz gráfica y la lógica principal del programa.
+
+\section{Integración del sistema}
+
+Todos los módulos implementados fueron integrados dentro de la clase \texttt{Application}, la cual actúa como punto central de coordinación.
+
+Durante la inicialización se crean la ventana, el renderizador, el sistema de audio, la interfaz gráfica, el escenario y el sistema de lluvia.
+
+Posteriormente comienza el ciclo principal de la aplicación, el cual se ejecuta continuamente hasta que el usuario decide cerrar la ventana.
+
+\subsection{Ciclo principal}
+
+En cada iteración del ciclo principal se realizan las siguientes etapas:
+
+\begin{enumerate}
+
+\item Procesamiento de eventos de entrada mediante GLFW.
+
+\item Actualización del temporizador.
+
+\item Actualización de la cámara.
+
+\item Actualización del terreno.
+
+\item Actualización del sistema de árboles.
+
+\item Actualización del sistema de lluvia.
+
+\item Actualización del sistema de audio.
+
+\item Actualización del sistema meteorológico.
+
+\item Renderizado de toda la escena.
+
+\item Renderizado de la interfaz gráfica.
+
+\item Intercambio de buffers.
+
+\end{enumerate}
+
+Esta estructura mantiene claramente separadas las responsabilidades de actualización y renderizado, facilitando futuras ampliaciones del proyecto.
+
+\subsection{Arquitectura final}
+
+Al finalizar el desarrollo, el proyecto quedó organizado en módulos especializados que cooperan entre sí manteniendo un bajo nivel de dependencia.
+
+La Figura correspondiente a la arquitectura general muestra cómo la clase \texttt{Application} coordina el funcionamiento del renderizador, la interfaz gráfica, el sistema de partículas, el sistema meteorológico, el audio y los distintos elementos presentes dentro de la escena.
+
+Esta organización facilita el mantenimiento del código y permite incorporar nuevos efectos visuales o componentes del entorno sin afectar significativamente el resto de la aplicación.

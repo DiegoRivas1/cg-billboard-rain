@@ -1,0 +1,23 @@
+\chapter{Conclusiones}
+
+Al finalizar el desarrollo del proyecto se alcanzaron satisfactoriamente los objetivos planteados para la simulación de una tormenta utilizando técnicas de gráficos por computadora basadas en OpenGL.
+
+\begin{enumerate}
+
+\item Se implementó un sistema de partículas capaz de representar lluvia en tiempo real mediante billboards, permitiendo controlar dinámicamente la cantidad de partículas, su velocidad y el efecto del viento.
+
+\item Se desarrolló una arquitectura modular que separa claramente las responsabilidades de renderizado, escena, partículas, audio, interfaz gráfica y efectos meteorológicos, facilitando el mantenimiento y la futura expansión del proyecto.
+
+\item Se implementó un escenario compuesto por un terreno texturizado y árboles representados mediante billboards, optimizando el rendimiento al evitar modelos tridimensionales complejos.
+
+\item Se integró un sistema de audio ambiental utilizando la biblioteca Miniaudio, sincronizando automáticamente el volumen y la velocidad del sonido con la intensidad de la lluvia representada por el sistema de partículas.
+
+\item Se incorporó un sistema meteorológico sencillo basado en relámpagos aleatorios que modifican temporalmente la iluminación general de la escena, incrementando la sensación de realismo sin afectar significativamente el rendimiento.
+
+\item La utilización de Dear ImGui permitió construir una interfaz gráfica intuitiva para modificar en tiempo real los parámetros principales de la simulación y monitorear información de rendimiento como los cuadros por segundo (FPS).
+
+\item Durante las pruebas realizadas, la aplicación mantuvo un comportamiento estable incluso utilizando miles de partículas simultáneamente, demostrando que la utilización de billboards constituye una alternativa eficiente para representar fenómenos naturales como lluvia y vegetación.
+
+\end{enumerate}
+
+En conjunto, el proyecto permitió aplicar diversos conceptos fundamentales de gráficos por computadora, entre ellos transformaciones geométricas, matrices de vista y proyección, texturizado, transparencia mediante canal alfa, renderizado de billboards, sistemas de partículas, integración de audio y organización modular de aplicaciones desarrolladas con OpenGL.

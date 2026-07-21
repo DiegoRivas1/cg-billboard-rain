@@ -1,0 +1,174 @@
+\chapter{Fundamento Teórico}
+
+\section{Gráficos por Computadora}
+
+Los gráficos por computadora constituyen una rama de la informática dedicada a la generación y manipulación de imágenes mediante algoritmos computacionales. En aplicaciones interactivas, como videojuegos o simuladores, el objetivo principal consiste en representar escenas tridimensionales manteniendo una velocidad de renderizado suficientemente alta para proporcionar una experiencia fluida al usuario.
+
+Actualmente, la mayor parte del procesamiento gráfico es realizado por la Unidad de Procesamiento Gráfico (GPU), dispositivo especializado en ejecutar operaciones matemáticas de manera paralela sobre miles de vértices y fragmentos simultáneamente. Para aprovechar esta capacidad, las aplicaciones utilizan interfaces de programación como OpenGL, DirectX o Vulkan.
+
+En este proyecto se empleó OpenGL debido a su portabilidad, amplia documentación y compatibilidad con múltiples plataformas.
+
+\section{OpenGL}
+
+OpenGL (Open Graphics Library) es una API estándar para el desarrollo de aplicaciones gráficas en dos y tres dimensiones. Su función principal consiste en proporcionar un conjunto de instrucciones que permiten enviar información geométrica hacia la GPU para ser procesada mediante el pipeline gráfico.
+
+OpenGL no genera escenas automáticamente; únicamente proporciona las herramientas necesarias para que el programador defina vértices, texturas, materiales, transformaciones, iluminación y sombreadores.
+
+En este proyecto se utilizó OpenGL 3.3 Core Profile, versión que elimina funciones antiguas del pipeline fijo y obliga a implementar los procesos gráficos mediante shaders programables.
+
+\section{Pipeline Gráfico}
+
+El pipeline gráfico representa la secuencia de etapas mediante las cuales un conjunto de vértices termina convirtiéndose en una imagen visible sobre la pantalla.
+
+Las principales etapas del pipeline utilizado durante el desarrollo fueron:
+
+\begin{itemize}
+\item Definición de la geometría mediante vértices.
+\item Transformación de coordenadas utilizando matrices de modelo, vista y proyección.
+\item Procesamiento en el Vertex Shader.
+\item Rasterización.
+\item Procesamiento de fragmentos mediante el Fragment Shader.
+\item Escritura del resultado en el framebuffer.
+\end{itemize}
+
+Cada cuadro generado por la aplicación sigue exactamente esta secuencia.
+
+\section{Shaders}
+
+Los shaders son pequeños programas ejecutados directamente por la GPU. Su objetivo consiste en procesar la información gráfica de forma altamente paralela.
+
+En este proyecto se emplearon dos tipos de shaders.
+
+\subsection{Vertex Shader}
+
+El Vertex Shader procesa individualmente cada vértice de un objeto. En él se aplican las transformaciones espaciales utilizando las matrices de modelo, vista y proyección.
+
+Además, para los billboards se calcula la orientación del plano utilizando los vectores Right y Up obtenidos desde la cámara.
+
+\subsection{Fragment Shader}
+
+Después de la rasterización, el Fragment Shader determina el color final de cada píxel.
+
+En este proyecto los fragment shaders realizan principalmente dos tareas:
+
+\begin{itemize}
+\item Aplicar las texturas.
+\item Descartar píxeles completamente transparentes mediante la instrucción \texttt{discard}.
+\end{itemize}
+
+Gracias a ello es posible utilizar imágenes PNG con transparencia sin que aparezca el cuadrado completo del billboard.
+
+\section{Transformaciones Geométricas}
+
+Cada objeto de la escena posee una transformación independiente formada por tres componentes fundamentales:
+
+\begin{itemize}
+\item Posición.
+\item Rotación.
+\item Escala.
+\end{itemize}
+
+Estas transformaciones son almacenadas dentro de una matriz de modelo (\textit{Model Matrix}), la cual convierte las coordenadas locales del objeto hacia coordenadas del mundo.
+
+Posteriormente, la matriz de vista transforma dichas coordenadas al sistema de referencia de la cámara, mientras que la matriz de proyección convierte la escena tridimensional en coordenadas bidimensionales aptas para ser mostradas sobre la pantalla.
+
+\section{Texturas}
+
+Una textura es una imagen bidimensional utilizada para aportar detalle visual a una geometría sencilla.
+
+Durante el proyecto se utilizaron texturas PNG con canal alfa para representar:
+
+\begin{itemize}
+\item Gotas de lluvia.
+\item Árboles.
+\item Terreno.
+\end{itemize}
+
+El canal alfa permite representar únicamente las regiones visibles de la imagen, descartando automáticamente el fondo transparente.
+
+\section{Alpha Blending}
+
+El Alpha Blending permite combinar el color de un fragmento con el color previamente almacenado en el framebuffer.
+
+La configuración utilizada fue:
+
+\[
+glBlendFunc(GL\_SRC\_ALPHA,\;GL\_ONE\_MINUS\_SRC\_ALPHA)
+\]
+
+Esta configuración resulta adecuada para objetos parcialmente transparentes como lluvia, humo o vegetación.
+
+\section{Billboards}
+
+Los billboards constituyen una técnica ampliamente utilizada para representar objetos complejos mediante un único cuadrilátero texturizado.
+
+Su funcionamiento consiste en orientar continuamente dicho plano hacia la cámara para que el observador siempre perciba la textura de frente.
+
+Esta técnica permite representar vegetación, partículas, explosiones, humo o efectos atmosféricos reduciendo considerablemente el número de polígonos procesados.
+
+En este proyecto los billboards fueron utilizados para representar tanto las gotas de lluvia como los árboles del escenario.
+
+\section{Sistema de Partículas}
+
+Un sistema de partículas administra un conjunto de elementos independientes que comparten un comportamiento similar.
+
+Cada partícula posee información propia, entre la que se encuentra:
+
+\begin{itemize}
+\item Posición.
+\item Velocidad.
+\item Dirección.
+\item Estado.
+\item Tiempo de vida.
+\end{itemize}
+
+Cuando una partícula alcanza el final de su ciclo de vida, el sistema la reutiliza asignándole una nueva posición inicial. Este mecanismo evita crear y destruir objetos continuamente, reduciendo significativamente el costo computacional.
+
+\section{Renderizado en Tiempo Real}
+
+Una aplicación interactiva ejecuta continuamente un ciclo conocido como \textit{Game Loop}.
+
+Durante cada iteración se realizan las siguientes operaciones:
+
+\begin{enumerate}
+\item Procesamiento de entradas del usuario.
+\item Actualización de la lógica.
+\item Actualización de partículas.
+\item Actualización de la cámara.
+\item Renderizado completo de la escena.
+\item Presentación del frame generado.
+\end{enumerate}
+
+Este ciclo se repite decenas de veces por segundo hasta finalizar la aplicación.
+
+\section{Interfaz Gráfica}
+
+Para permitir la modificación de parámetros durante la ejecución se utilizó Dear ImGui.
+
+Esta biblioteca proporciona una interfaz inmediata mediante la cual fue posible controlar:
+
+\begin{itemize}
+\item Cantidad de partículas.
+\item Velocidad de la lluvia.
+\item Intensidad del viento.
+\item Información de rendimiento (FPS).
+\item Posición de la cámara.
+\end{itemize}
+
+Gracias a ello el comportamiento del sistema puede modificarse sin necesidad de recompilar la aplicación.
+
+\section{Audio Ambiental}
+
+La ambientación sonora se implementó utilizando la biblioteca Miniaudio.
+
+El sistema reproduce un sonido continuo de lluvia cuya intensidad aumenta conforme incrementa la cantidad de partículas presentes en la escena.
+
+Adicionalmente, el diseño del proyecto permite incorporar fácilmente nuevos sonidos ambientales, como viento, truenos o efectos climáticos adicionales.
+
+\section{Sistema Climático}
+
+Como complemento visual se implementó un sistema climático sencillo encargado de generar relámpagos.
+
+El efecto consiste en incrementar temporalmente la intensidad de iluminación del fondo mediante una interpolación controlada por tiempo, simulando el destello característico producido durante una tormenta.
+
+Aunque se trata de una implementación simple, contribuye significativamente a mejorar la inmersión del escenario.
